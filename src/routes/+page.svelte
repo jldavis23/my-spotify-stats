@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-    import MyComponent from '../lib/components/MyComponent.svelte'
-    import SecondComponent from '../lib/components/SecondComponent.svelte'
+	import MyComponent from '../lib/components/MyComponent.svelte';
+	import SecondComponent from '../lib/components/SecondComponent.svelte';
 
 	const clientId = 'client_id';
 
@@ -12,17 +12,17 @@
 		code = params.get('code');
 	}
 
-    let accessToken
+	let accessToken
 	onMount(async () => {
-        
+
 		if (!code) {
 			redirectToAuthCodeFlow(clientId);
 		} else {
 			// accessToken = await getAccessToken(clientId, code);
 			// const profile = await fetchProfile(accessToken);
-            // const topTracks = await fetchTopTracks(accessToken)
+	        // const topTracks = await fetchTopTracks(accessToken)
 			// console.log(profile);
-            // console.log(topTracks)
+	        // console.log(topTracks)
 		}
 	});
 
@@ -101,7 +101,7 @@
 		}
 	}
 
-    async function fetchTopTracks(token) {
+	async function fetchTopTracks(token) {
 		try {
 			const result = await fetch('https://api.spotify.com/v1/me/top/tracks', {
 				method: 'GET',
@@ -117,11 +117,12 @@
 
 <main>
 	<h1>Welcome to SvelteKit</h1>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+	<p class="font-bold">
+		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
+	</p>
 
-    {#await getAccessToken(clientId, code) then token}
+	<!-- {#await getAccessToken(clientId, code) then token}
         <MyComponent accessToken={token}/>
         <SecondComponent accessToken={token}/>
-    {/await}
-
+    {/await} -->
 </main>
