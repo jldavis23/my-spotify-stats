@@ -1,12 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
-    import { browser } from '$app/environment';
-    import TopTracks from '../../lib/components/TopTracks.svelte'
+	import { browser } from '$app/environment';
+	import TopTracks from '../../lib/components/TopTracks.svelte';
 
-    const clientId = '';
-	let accessToken;
-    let code;
-    let isAuthenticated = false;
+	const clientId = '';
+	let accessToken = null;
+	let code;
+	let isAuthenticated = false;
+	let profile;
 
 	onMount(async () => {
 		if (browser) {
@@ -16,9 +17,10 @@
 		if (!code) {
 			redirectToAuthCodeFlow(clientId);
 		} else {
-            isAuthenticated = true
-			// accessToken = await getAccessToken(clientId, code);
-			// tracks = await fetchTopTracks(accessToken);
+			isAuthenticated = true;
+			accessToken = await getAccessToken(clientId, code);
+			profile = await fetchProfile(accessToken);
+			console.log(profile);
 		}
 	});
 
@@ -34,7 +36,7 @@
 		params.append('redirect_uri', 'http://localhost:5490/stats');
 		params.append(
 			'scope',
-			'user-read-private user-read-email user-top-read user-read-currently-playing'
+			'user-read-private user-read-email user-top-read user-read-currently-playing playlist-modify-public playlist-modify-private'
 		);
 		params.append('code_challenge_method', 'S256');
 		params.append('code_challenge', challenge);
@@ -93,38 +95,26 @@
 
 			return await result.json();
 		} catch (err) {
-			//console.log(err)
-		}
-	}
-
-	async function fetchTopTracks(token) {
-		try {
-			const result = await fetch('https://api.spotify.com/v1/me/top/tracks', {
-				method: 'GET',
-				headers: { Authorization: `Bearer ${token}` }
-			});
-
-            const trackData = await result.json();
-			return trackData.items;
-		} catch (err) {
-			//console.log(err)
+			console.log(err);
 		}
 	}
 </script>
 
-<main>
-    {#if !isAuthenticated}
-    <p>loading</p>
-    {:else}
-    {#await getAccessToken(clientId, code)}
-    <p>LOADING...</p>
-    {:then token}
-    <p>here's your stats!</p>
-    <TopTracks accessToken={token} />
-    {/await}
-    {/if}
+<main class="max-w-5xl m-auto p-10">
+	{#if !isAuthenticated}
+		<p>loading</p>
+	{:else}
+		{#if profile}
+			<p>here's your stats!</p>
+			<TopTracks {accessToken} userId={profile.id} />
+		{/if}
+		<!-- {#await getAccessToken(clientId, code)}
+		<p>LOADING...</p>
+	{:then token}
+		<p>here's your stats!</p>
+		<TopTracks accessToken={token} />
+	{/await} -->
+	{/if}
 
-
-
-    
+	<!-- <TopTracks accessToken={123}/> -->
 </main>

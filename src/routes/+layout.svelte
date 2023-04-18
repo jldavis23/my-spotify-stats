@@ -2,7 +2,10 @@
 	import '../app.css';
 </script>
 
+
 <slot />
+
+
 
 <footer class="footer footer-center p-10 bg-neutral text-neutral-content">
 	<div class="grid grid-flow-col gap-4">
