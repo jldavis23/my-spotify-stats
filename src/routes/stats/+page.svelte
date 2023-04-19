@@ -9,20 +9,26 @@
 	let isAuthenticated = false;
 	let profile;
 
-	onMount(async () => {
-		if (browser) {
-			const params = new URLSearchParams(window.location.search);
-			code = params.get('code');
-		}
-		if (!code) {
-			redirectToAuthCodeFlow(clientId);
-		} else {
-			isAuthenticated = true;
-			accessToken = await getAccessToken(clientId, code);
-			profile = await fetchProfile(accessToken);
-			console.log(profile);
-		}
-	});
+	//delete later
+	profile = {
+		display_name: 'George',
+		images: [{ url: '' }]
+	};
+
+	// onMount(async () => {
+	// 	if (browser) {
+	// 		const params = new URLSearchParams(window.location.search);
+	// 		code = params.get('code');
+	// 	}
+	// 	if (!code) {
+	// 		redirectToAuthCodeFlow(clientId);
+	// 	} else {
+	// 		isAuthenticated = true;
+	// 		accessToken = await getAccessToken(clientId, code);
+	// 		profile = await fetchProfile(accessToken);
+	// 		console.log(profile);
+	// 	}
+	// });
 
 	async function redirectToAuthCodeFlow(clientId) {
 		const verifier = generateCodeVerifier(128);
@@ -100,21 +106,47 @@
 	}
 </script>
 
-<main class="max-w-5xl m-auto p-10">
-	{#if !isAuthenticated}
-		<p>loading</p>
-	{:else}
-		{#if profile}
+<!-- max-w-5xl m-auto -->
+
+<div class="bg-neutral text-neutral-content">
+	<div class="navbar max-w-5xl m-auto">
+		<div class="flex-1">
+			<p class="normal-case text-xl">My Spotify Stats</p>
+		</div>
+		<div class="flex-none gap-2">
+			<p>{profile.display_name}</p>
+			<div class="avatar">
+				<div class="w-10 rounded-full">
+					<img src={profile.images[0].url} alt="avatar" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<main class="flex">
+	<ul class="menu bg-primary w-56 p-2 sticky top-0">
+		<li><a>Item 1</a></li>
+		<li><a>Item 2</a></li>
+		<li><a>Item 3</a></li>
+	</ul>
+
+	<div>
+		{#if !isAuthenticated}
+			<!-- <p>loading</p> -->
+		{:else if profile}
 			<p>here's your stats!</p>
 			<TopTracks {accessToken} userId={profile.id} />
 		{/if}
-		<!-- {#await getAccessToken(clientId, code)}
-		<p>LOADING...</p>
-	{:then token}
-		<p>here's your stats!</p>
-		<TopTracks accessToken={token} />
-	{/await} -->
-	{/if}
 
-	<!-- <TopTracks accessToken={123}/> -->
+		<TopTracks accessToken={123} />
+		<TopTracks accessToken={123} />
+	</div>
 </main>
+
+<!-- {#await getAccessToken(clientId, code)}
+					<p>LOADING...</p>
+				{:then token}
+					<p>here's your stats!</p>
+					<TopTracks accessToken={token} />
+				{/await} -->

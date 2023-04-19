@@ -15,9 +15,9 @@
 	$:console.log(tracks)
 
 	//Functions
-	onMount(async () => {
-		fetchTopTracks('short_term');
-	});
+	// onMount(async () => {
+	// 	fetchTopTracks('short_term');
+	// });
 
 	async function fetchTopTracks(timeFrame) {
 		if (timeFrame === 'short_term') {
@@ -86,32 +86,32 @@
 		}
 	};
 
-	// tracks = [
-	// 	{
-	// 		name: 'For Youth',
-	// 		artists: [{ name: 'BTS' }],
-	// 		album: {
-	// 			name: 'PROOF',
-	// 			images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
-	// 		},
-	// 		duration_ms: 207959,
-	// 		popularity: 69
-	// 	},
-	// 	{
-	// 		name: 'For Youth',
-	// 		artists: [{ name: 'BTS' }],
-	// 		album: {
-	// 			name: 'PROOF',
-	// 			images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
-	// 		},
-	// 		duration_ms: 207959,
-	// 		popularity: 69
-	// 	}
-	// ];
+	tracks = [
+		{
+			name: 'For Youth',
+			artists: [{ name: 'BTS' }],
+			album: {
+				name: 'PROOF',
+				images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
+			},
+			duration_ms: 207959,
+			popularity: 69
+		},
+		{
+			name: 'For Youth',
+			artists: [{ name: 'BTS' }],
+			album: {
+				name: 'PROOF',
+				images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
+			},
+			duration_ms: 207959,
+			popularity: 69
+		}
+	];
 </script>
 
 <div class="md:flex items-center gap-12">
-	<h2 class="text-4xl my-4">Your Top Tracks</h2>
+	<h2 class="text-4xl">Your Top Tracks</h2>
 	<div class="btn-group">
 		<button
 			class="btn btn-xs"
