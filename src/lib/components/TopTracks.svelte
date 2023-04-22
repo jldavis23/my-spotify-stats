@@ -110,9 +110,9 @@
 	// ];
 </script>
 
-<div class="lg:flex items-center gap-12">
+<div class="lg:flex items-center gap-12 ">
 	<h2 class="text-4xl">Your Top Tracks</h2>
-	<div class="btn-group">
+	<div class="btn-group my-5">
 		<button
 			class="btn btn-xs"
 			class:btn-active={btnTimeFrame === 'Last 4 Weeks'}

@@ -2,11 +2,12 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import TopTracks from '../../lib/components/TopTracks.svelte';
+	import TopArtists from '../../lib/components/TopArtists.svelte';
 
 	const clientId = '';
 	let accessToken = null;
 	let code;
-	let isAuthenticated = false;
+	let isAuthenticated = false; 
 	let profile;
 
 	//delete later
@@ -159,12 +160,12 @@
 			<li><a>Item 3</a></li>
 		</ul>
 
-		<div class="p-10">
+		<div>
 			<p>here's your stats!</p>
-			<TopTracks {accessToken} userId={profile.id} />
 
-			<!-- <TopTracks accessToken={123} />
-		<TopTracks accessToken={123} /> -->
+			<div class="mb-28 p-10"><TopTracks {accessToken} userId={profile.id} /></div>
+		
+			<div class="mb-28 p-10 bg-base-200"><TopArtists {accessToken} /></div>
 		</div>
 	</main>
 {/if}
