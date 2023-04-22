@@ -10,25 +10,25 @@
 	let profile;
 
 	//delete later
-	profile = {
-		display_name: 'George',
-		images: [{ url: '' }]
-	};
+	// profile = {
+	// 	display_name: 'George',
+	// 	images: [{ url: '' }]
+	// };
 
-	// onMount(async () => {
-	// 	if (browser) {
-	// 		const params = new URLSearchParams(window.location.search);
-	// 		code = params.get('code');
-	// 	}
-	// 	if (!code) {
-	// 		redirectToAuthCodeFlow(clientId);
-	// 	} else {
-	// 		isAuthenticated = true;
-	// 		accessToken = await getAccessToken(clientId, code);
-	// 		profile = await fetchProfile(accessToken);
-	// 		console.log(profile);
-	// 	}
-	// });
+	onMount(async () => {
+		if (browser) {
+			const params = new URLSearchParams(window.location.search);
+			code = params.get('code');
+		}
+		if (!code) {
+			redirectToAuthCodeFlow(clientId);
+		} else {
+			isAuthenticated = true;
+			accessToken = await getAccessToken(clientId, code);
+			profile = await fetchProfile(accessToken);
+			console.log(profile);
+		}
+	});
 
 	async function redirectToAuthCodeFlow(clientId) {
 		const verifier = generateCodeVerifier(128);
@@ -108,45 +108,63 @@
 
 <!-- max-w-5xl m-auto -->
 
-<div class="bg-neutral text-neutral-content">
-	<div class="navbar max-w-5xl m-auto">
-		<div class="flex-1">
-			<p class="normal-case text-xl">My Spotify Stats</p>
-		</div>
-		<div class="flex-none gap-2">
-			<p>{profile.display_name}</p>
-			<div class="avatar">
-				<div class="w-10 rounded-full">
-					<img src={profile.images[0].url} alt="avatar" />
+{#if !isAuthenticated}
+	<h1>LOADING</h1>
+{:else if profile}
+	<div class="bg-neutral text-neutral-content">
+		<div class="navbar">
+			<div class="flex-1">
+				<div class="dropdown text-primary-content">
+					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+					<!-- svelte-ignore a11y-label-has-associated-control -->
+					<label tabindex="0" class="btn m-1 sm:hidden"
+						><svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							class="inline-block w-5 h-5 stroke-current"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M4 6h16M4 12h16M4 18h16"
+							/></svg
+						></label
+					>
+					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+					<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-primary rounded-box w-52">
+						<li><a href="#">Item 1</a></li>
+						<li><a href="#">Item 2</a></li>
+					</ul>
+				</div>
+				<p class="normal-case text-xl">My Spotify Stats</p>
+			</div>
+			<div class="flex-none gap-2">
+				<p>{profile.display_name}</p>
+				<div class="avatar">
+					<div class="w-10 rounded-full">
+						<img src={profile.images[0].url} alt="avatar" />
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<main class="flex">
-	<ul class="menu bg-primary w-56 p-2 sticky top-0">
-		<li><a>Item 1</a></li>
-		<li><a>Item 2</a></li>
-		<li><a>Item 3</a></li>
-	</ul>
+	<main class="sm:flex max-w-[1400px]">
+		<ul
+			class="menu menu-horizontal hidden sm:block sm:menu-vertical bg-primary w-full sm:w-60 p-3 sm:sticky sm:top-0 sm:h-screen"
+		>
+			<li><a>Item 1</a></li>
+			<li><a>Item 2</a></li>
+			<li><a>Item 3</a></li>
+		</ul>
 
-	<div>
-		{#if !isAuthenticated}
-			<!-- <p>loading</p> -->
-		{:else if profile}
+		<div class="p-10">
 			<p>here's your stats!</p>
 			<TopTracks {accessToken} userId={profile.id} />
-		{/if}
 
-		<TopTracks accessToken={123} />
-		<TopTracks accessToken={123} />
-	</div>
-</main>
-
-<!-- {#await getAccessToken(clientId, code)}
-					<p>LOADING...</p>
-				{:then token}
-					<p>here's your stats!</p>
-					<TopTracks accessToken={token} />
-				{/await} -->
+			<!-- <TopTracks accessToken={123} />
+		<TopTracks accessToken={123} /> -->
+		</div>
+	</main>
+{/if}

@@ -15,9 +15,9 @@
 	$:console.log(tracks)
 
 	//Functions
-	// onMount(async () => {
-	// 	fetchTopTracks('short_term');
-	// });
+	onMount(async () => {
+		fetchTopTracks('short_term');
+	});
 
 	async function fetchTopTracks(timeFrame) {
 		if (timeFrame === 'short_term') {
@@ -86,31 +86,31 @@
 		}
 	};
 
-	tracks = [
-		{
-			name: 'For Youth',
-			artists: [{ name: 'BTS' }],
-			album: {
-				name: 'PROOF',
-				images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
-			},
-			duration_ms: 207959,
-			popularity: 69
-		},
-		{
-			name: 'For Youth',
-			artists: [{ name: 'BTS' }],
-			album: {
-				name: 'PROOF',
-				images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
-			},
-			duration_ms: 207959,
-			popularity: 69
-		}
-	];
+	// tracks = [
+	// 	{
+	// 		name: 'For Youth',
+	// 		artists: [{ name: 'BTS' }],
+	// 		album: {
+	// 			name: 'PROOF',
+	// 			images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
+	// 		},
+	// 		duration_ms: 207959,
+	// 		popularity: 69
+	// 	},
+	// 	{
+	// 		name: 'For Youth',
+	// 		artists: [{ name: 'BTS' }],
+	// 		album: {
+	// 			name: 'PROOF',
+	// 			images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
+	// 		},
+	// 		duration_ms: 207959,
+	// 		popularity: 69
+	// 	}
+	// ];
 </script>
 
-<div class="md:flex items-center gap-12">
+<div class="lg:flex items-center gap-12">
 	<h2 class="text-4xl">Your Top Tracks</h2>
 	<div class="btn-group">
 		<button
@@ -133,8 +133,8 @@
 
 <div
 	class="py-3 grid gap-3
-sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-[repeat(10,_minmax(0,_1fr))]
-md:grid-cols-3 md:grid-rows-[repeat(7,_minmax(0,_1fr))]"
+md:grid-flow-col md:grid-cols-2 md:grid-rows-[repeat(10,_minmax(0,_1fr))]
+lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 >
 	{#each tracks as track, index}
 		<div class="tooltip tooltip-primary" data-tip="Album: {track.album.name} | Duration: {convertToMinSec(track.duration_ms)}">
