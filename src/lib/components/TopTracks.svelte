@@ -2,6 +2,7 @@
 	//Imports
 	import { onMount } from 'svelte';
 	import SongModal from './SongModal.svelte';
+	import { topTracksLong } from './../store/store.js'
 
 	//Props
 	export let accessToken;
@@ -16,7 +17,8 @@
 
 	//Functions
 	onMount(async () => {
-		fetchTopTracks('short_term');
+		tracks = await fetchTopTracks('long_term');
+		// topTracksLong.set(tracks)
 	});
 
 	async function fetchTopTracks(timeFrame) {
@@ -115,8 +117,8 @@
 	<div class="btn-group my-5">
 		<button
 			class="btn btn-xs"
-			class:btn-active={btnTimeFrame === 'Last 4 Weeks'}
-			on:click={() => fetchTopTracks('short_term')}>Last 4 Weeks</button
+			class:btn-active={btnTimeFrame === 'All Time'}
+			on:click={() => fetchTopTracks('long_term')}>All time</button
 		>
 		<button
 			class="btn btn-xs"
@@ -125,8 +127,8 @@
 		>
 		<button
 			class="btn btn-xs"
-			class:btn-active={btnTimeFrame === 'All Time'}
-			on:click={() => fetchTopTracks('long_term')}>All time</button
+			class:btn-active={btnTimeFrame === 'Last 4 Weeks'}
+			on:click={() => fetchTopTracks('short_term')}>Last 4 Weeks</button
 		>
 	</div>
 </div>

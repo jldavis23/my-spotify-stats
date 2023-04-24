@@ -13,7 +13,7 @@
 
 	//Functions
 	onMount(async () => {
-		fetchTopArtists('short_term')
+		fetchTopArtists('long_term')
 	});
 
 	async function fetchTopArtists(timeFrame) {
@@ -52,8 +52,8 @@
 	<div class="btn-group my-5">
 		<button
 			class="btn btn-xs"
-			class:btn-active={btnTimeFrame === 'Last 4 Weeks'}
-			on:click={() => fetchTopArtists('short_term')}>Last 4 Weeks</button
+			class:btn-active={btnTimeFrame === 'All Time'}
+			on:click={() => fetchTopArtists('long_term')}>All time</button
 		>
 		<button
 			class="btn btn-xs"
@@ -62,8 +62,8 @@
 		>
 		<button
 			class="btn btn-xs"
-			class:btn-active={btnTimeFrame === 'All Time'}
-			on:click={() => fetchTopArtists('long_term')}>All time</button
+			class:btn-active={btnTimeFrame === 'Last 4 Weeks'}
+			on:click={() => fetchTopArtists('short_term')}>Last 4 Weeks</button
 		>
 	</div>
 </div>

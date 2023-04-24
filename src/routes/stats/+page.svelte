@@ -1,8 +1,12 @@
 <script>
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	//Components
 	import TopTracks from '../../lib/components/TopTracks.svelte';
 	import TopArtists from '../../lib/components/TopArtists.svelte';
+	import Genres from '../../lib/components/Genres.svelte';
+	//Store
+	import { topTracksLong } from '../../lib/store/store.js'
 
 	const clientId = '';
 	let accessToken = null;
@@ -27,7 +31,8 @@
 			isAuthenticated = true;
 			accessToken = await getAccessToken(clientId, code);
 			profile = await fetchProfile(accessToken);
-			console.log(profile);
+
+			topTracksLong.set(await fetchAllTopTracks())
 		}
 	});
 
@@ -105,13 +110,31 @@
 			console.log(err);
 		}
 	}
+
+	async function fetchAllTopTracks() {
+		try {
+			const result = await fetch(
+				`https://api.spotify.com/v1/me/top/tracks?limit=50&offset=0&time_range=long_term`,
+				{
+					method: 'GET',
+					headers: { Authorization: `Bearer ${accessToken}` }
+				}
+			);
+
+			const trackData = await result.json();
+			const tracks = trackData.items;
+			return tracks
+		} catch (err) {
+			console.log(err);
+		}
+	}
 </script>
 
 <!-- max-w-5xl m-auto -->
 
 {#if !isAuthenticated}
 	<h1>LOADING</h1>
-{:else if profile}
+{:else if profile && $topTracksLong !== []}
 	<div class="bg-neutral text-neutral-content">
 		<div class="navbar">
 			<div class="flex-1">
@@ -161,11 +184,16 @@
 		</ul>
 
 		<div>
-			<p>here's your stats!</p>
-
-			<div class="mb-28 p-10"><TopTracks {accessToken} userId={profile.id} /></div>
+			<!-- <div class="mb-24 p-10">
+				<p>tracks you can't get enough of right now</p>
+				<TopTracks {accessToken} userId={profile.id} />
+			</div>
 		
-			<div class="mb-28 p-10 bg-base-200"><TopArtists {accessToken} /></div>
+			<div class="p-10 bg-base-200">
+				<p>these artists dominate your playlists</p>
+				<TopArtists {accessToken} />
+			</div> -->
+			<Genres {accessToken}/>
 		</div>
 	</main>
 {/if}
