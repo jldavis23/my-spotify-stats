@@ -5,14 +5,16 @@
 	import TopTracks from '../../lib/components/TopTracks.svelte';
 	import TopArtists from '../../lib/components/TopArtists.svelte';
 	import Genres from '../../lib/components/Genres.svelte';
-	//Store
-	import { topTracksLong } from '../../lib/store/store.js'
+	import Decade from '../../lib/components/Decade.svelte';
+	
 
 	const clientId = '';
 	let accessToken = null;
 	let code;
 	let isAuthenticated = false; 
 	let profile;
+	let allTopTracks;
+	let allTopArtists;
 
 	//delete later
 	// profile = {
@@ -32,7 +34,8 @@
 			accessToken = await getAccessToken(clientId, code);
 			profile = await fetchProfile(accessToken);
 
-			topTracksLong.set(await fetchAllTopTracks())
+			allTopTracks = await fetchAllTopTracks()
+			allTopArtists = await fetchAllTopArtists()
 		}
 	});
 
@@ -128,13 +131,31 @@
 			console.log(err);
 		}
 	}
+
+	async function fetchAllTopArtists() {
+		try {
+			const result = await fetch(
+				`https://api.spotify.com/v1/me/top/artists?limit=50&offset=0&time_range=long_term`,
+				{
+					method: 'GET',
+					headers: { Authorization: `Bearer ${accessToken}` }
+				}
+			);
+
+			const artistData = await result.json();
+			const artists = artistData.items;
+			return artists
+		} catch (err) {
+			console.log(err);
+		}
+	}
 </script>
 
 <!-- max-w-5xl m-auto -->
 
 {#if !isAuthenticated}
 	<h1>LOADING</h1>
-{:else if profile && $topTracksLong !== []}
+{:else if profile && allTopTracks}
 	<div class="bg-neutral text-neutral-content">
 		<div class="navbar">
 			<div class="flex-1">
@@ -193,7 +214,9 @@
 				<p>these artists dominate your playlists</p>
 				<TopArtists {accessToken} />
 			</div> -->
-			<Genres {accessToken}/>
+
+			<Decade {allTopTracks}/>
+			
 		</div>
 	</main>
 {/if}
