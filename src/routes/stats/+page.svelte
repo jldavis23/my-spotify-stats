@@ -6,6 +6,7 @@
 	import TopArtists from '../../lib/components/TopArtists.svelte';
 	import Genres from '../../lib/components/Genres.svelte';
 	import Decade from '../../lib/components/Decade.svelte';
+	import AudioFeatures from '../../lib/components/AudioFeatures.svelte';
 	
 
 	const clientId = '';
@@ -13,10 +14,12 @@
 	let code;
 	let isAuthenticated = false;
 	let profile;
-	let allTopTracks
-	let allTopArtists
+	let allTopTracksLong 
+	let allTopTracksShort 
+	let allTopArtistsLong
+	let allTopArtistsShort
 
-	//delete later
+	// delete later
 	// profile = {
 	// 	display_name: 'George',
 	// 	images: [{ url: '' }]
@@ -34,8 +37,10 @@
 			accessToken = await getAccessToken(clientId, code);
 			profile = await fetchProfile(accessToken);
 
-			allTopTracks = await fetchAllTopTracks()
-			allTopArtists = await fetchAllTopArtists()
+			allTopTracksLong = await fetchAllTopTracks('long_term')
+			allTopTracksShort = await fetchAllTopTracks('short_term')
+			allTopArtistsLong = await fetchAllTopArtists('long_term')
+			allTopArtistsShort = await fetchAllTopArtists('short_term')
 		}
 	});
 
@@ -114,10 +119,10 @@
 		}
 	}
 
-	async function fetchAllTopTracks() {
+	async function fetchAllTopTracks(timeFrame) {
 		try {
 			const result = await fetch(
-				`https://api.spotify.com/v1/me/top/tracks?limit=50&offset=0&time_range=long_term`,
+				`https://api.spotify.com/v1/me/top/tracks?limit=50&offset=0&time_range=${timeFrame}`,
 				{
 					method: 'GET',
 					headers: { Authorization: `Bearer ${accessToken}` }
@@ -132,10 +137,10 @@
 		}
 	}
 
-	async function fetchAllTopArtists() {
+	async function fetchAllTopArtists(timeFrame) {
 		try {
 			const result = await fetch(
-				`https://api.spotify.com/v1/me/top/artists?limit=50&offset=0&time_range=long_term`,
+				`https://api.spotify.com/v1/me/top/artists?limit=50&offset=0&time_range=${timeFrame}`,
 				{
 					method: 'GET',
 					headers: { Authorization: `Bearer ${accessToken}` }
@@ -153,7 +158,7 @@
 
 {#if !isAuthenticated}
 	<h1>LOADING</h1>
-{:else if profile && allTopTracks && allTopArtists}
+{:else if profile && allTopTracksLong && allTopArtistsLong && allTopTracksShort && allTopArtistsShort}
 	<div class="bg-neutral text-neutral-content">
 		<div class="navbar">
 			<div class="flex-1">
@@ -203,19 +208,19 @@
 		</ul>
 
 		<div class="w-full">
-			<div class="mb-24 p-10">
+			<div id="" class="p-10 bg-[#D9EDDF]">
 				<p>tracks you can't get enough of right now</p>
 				<TopTracks {accessToken} userId={profile.id} />
 			</div>
 		
-			<div class="p-10 bg-base-200">
+			<div class="p-10">
 				<p>these artists dominate your playlists</p>
 				<TopArtists {accessToken} />
 			</div>
 
 			<div class="grid md:grid-cols-2">
-				<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtists}/></div>
-				<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracks}/></div>
+				<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort}/></div>
+				<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort}/></div>
 			</div>
 			
 			
