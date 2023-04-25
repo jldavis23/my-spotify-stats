@@ -1,33 +1,51 @@
 <script>
-    //Imports
-    import { onMount } from 'svelte'
-    import { topTracksLong } from './../store/store.js'
+	//Imports
+	import { onMount } from 'svelte';
 
-    //Props
-    export let accessToken
+	//Props
+	export let allTopArtists;
 
-    //Variables
-    
-    let trackIds = []
+	//Variables
+	let allGenres = [];
+	let genreCounts = [];
+	let topFiveGenres
 
-    //Functions
-    onMount(async () => {
-        let listOfTracks = $topTracksLong
-        console.log($topTracksLong)
-        trackIds = listOfTracks.map((track) => track.id);
-        console.log(await fetchMoreTrackInfo())
-    })
-
-    const fetchMoreTrackInfo = async () => {
-        try {
-			const result = await fetch(`https://api.spotify.com/v1/tracks/?ids=${trackIds.join()}`, {
-				method: 'GET',
-				headers: { Authorization: `Bearer ${accessToken}` }
+	//Functions
+	onMount(() => {
+		allTopArtists.forEach((artist) => {
+			artist.genres.forEach((genre) => {
+				allGenres.push(genre);
 			});
-		} catch (err) {
-			console.log(err);
+		});
+
+		allGenres.forEach((genre) => {
+			if (genreCounts[genre]) {
+				genreCounts[genre]++;
+			} else {
+				genreCounts[genre] = 1;
+			}
+		});
+
+		let sortable = [];
+		for (var genre in genreCounts) {
+			sortable.push([genre, genreCounts[genre]]);
 		}
-    }
+
+		sortable.sort(function (a, b) {
+			return b[1] - a[1];
+		});
+
+		topFiveGenres = sortable.slice(0, 5);
+
+		console.log(topFiveGenres);
+	});
 </script>
 
-<div>HELLO GENRES</div>
+<h2 class="text-4xl ">Your Top Genres</h2>
+<div>
+	{#if topFiveGenres}
+		{#each topFiveGenres as genre, index}
+			<p class="font-bold text-lg py-3">{index + 1}. {genre[0]}</p>
+		{/each}
+	{/if}
+</div>

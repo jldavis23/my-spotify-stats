@@ -11,10 +11,10 @@
 	const clientId = '';
 	let accessToken = null;
 	let code;
-	let isAuthenticated = false; 
+	let isAuthenticated = false;
 	let profile;
-	let allTopTracks;
-	let allTopArtists;
+	let allTopTracks
+	let allTopArtists
 
 	//delete later
 	// profile = {
@@ -151,11 +151,9 @@
 	}
 </script>
 
-<!-- max-w-5xl m-auto -->
-
 {#if !isAuthenticated}
 	<h1>LOADING</h1>
-{:else if profile && allTopTracks}
+{:else if profile && allTopTracks && allTopArtists}
 	<div class="bg-neutral text-neutral-content">
 		<div class="navbar">
 			<div class="flex-1">
@@ -204,8 +202,8 @@
 			<li><a>Item 3</a></li>
 		</ul>
 
-		<div>
-			<!-- <div class="mb-24 p-10">
+		<div class="w-full">
+			<div class="mb-24 p-10">
 				<p>tracks you can't get enough of right now</p>
 				<TopTracks {accessToken} userId={profile.id} />
 			</div>
@@ -213,9 +211,13 @@
 			<div class="p-10 bg-base-200">
 				<p>these artists dominate your playlists</p>
 				<TopArtists {accessToken} />
-			</div> -->
+			</div>
 
-			<Decade {allTopTracks}/>
+			<div class="grid md:grid-cols-2">
+				<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtists}/></div>
+				<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracks}/></div>
+			</div>
+			
 			
 		</div>
 	</main>
