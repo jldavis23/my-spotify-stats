@@ -7,17 +7,16 @@
 	import Genres from '../../lib/components/Genres.svelte';
 	import Decade from '../../lib/components/Decade.svelte';
 	import AudioFeatures from '../../lib/components/AudioFeatures.svelte';
-	
 
 	const clientId = '';
 	let accessToken = null;
 	let code;
 	let isAuthenticated = false;
 	let profile;
-	let allTopTracksLong 
-	let allTopTracksShort 
-	let allTopArtistsLong
-	let allTopArtistsShort
+	let allTopTracksLong;
+	let allTopTracksShort;
+	let allTopArtistsLong;
+	let allTopArtistsShort;
 
 	// delete later
 	// profile = {
@@ -37,10 +36,10 @@
 			accessToken = await getAccessToken(clientId, code);
 			profile = await fetchProfile(accessToken);
 
-			allTopTracksLong = await fetchAllTopTracks('long_term')
-			allTopTracksShort = await fetchAllTopTracks('short_term')
-			allTopArtistsLong = await fetchAllTopArtists('long_term')
-			allTopArtistsShort = await fetchAllTopArtists('short_term')
+			allTopTracksLong = await fetchAllTopTracks('long_term');
+			allTopTracksShort = await fetchAllTopTracks('short_term');
+			allTopArtistsLong = await fetchAllTopArtists('long_term');
+			allTopArtistsShort = await fetchAllTopArtists('short_term');
 		}
 	});
 
@@ -131,7 +130,7 @@
 
 			const trackData = await result.json();
 			const tracks = trackData.items;
-			return tracks
+			return tracks;
 		} catch (err) {
 			console.log(err);
 		}
@@ -149,7 +148,7 @@
 
 			const artistData = await result.json();
 			const artists = artistData.items;
-			return artists
+			return artists;
 		} catch (err) {
 			console.log(err);
 		}
@@ -208,22 +207,24 @@
 		</ul>
 
 		<div class="w-full">
-			<div id="" class="p-10 bg-[#D9EDDF]">
+			<!-- <div id="" class="p-10 bg-[#D9EDDF]">
 				<p>tracks you can't get enough of right now</p>
 				<TopTracks {accessToken} userId={profile.id} />
 			</div>
-		
+
 			<div class="p-10">
 				<p>these artists dominate your playlists</p>
 				<TopArtists {accessToken} />
 			</div>
 
 			<div class="grid md:grid-cols-2">
-				<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort}/></div>
-				<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort}/></div>
+				<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort} /></div>
+				<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
+			</div> -->
+
+			<div id="" class="">
+				<AudioFeatures {accessToken} {allTopTracksLong} {allTopTracksShort} />
 			</div>
-			
-			
 		</div>
 	</main>
 {/if}

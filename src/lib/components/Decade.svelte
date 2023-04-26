@@ -1,7 +1,6 @@
 <script>
 	//Imports
 	import { onMount } from 'svelte';
-	import { topArtistsLong } from '../store/store';
 
 	//Props
 	export let allTopTracksLong;
