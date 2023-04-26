@@ -23,7 +23,7 @@
 			}
 		});
 
-		return `${Object.keys(dateCounts).reduce((a, b) => (dateCounts[a] > dateCounts[b] ? a : b))}0`;
+		return `${Object.keys(dateCounts).reduce((acc, curr) => (dateCounts[acc] > dateCounts[curr] ? acc : curr))}0`;
 	};
 
 	onMount(() => {
