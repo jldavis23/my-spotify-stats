@@ -8,6 +8,7 @@
 	import Decade from '../../lib/components/Decade.svelte';
 	import AudioFeatures from '../../lib/components/AudioFeatures.svelte';
 	import TrackRecs from '../../lib/components/TrackRecs.svelte'
+	import RelatedArtists from '../../lib/components/RelatedArtists.svelte';
 
 	const clientId = '';
 	let accessToken = null;
@@ -229,6 +230,10 @@
 
 			<div class="p-10">
 				<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id}/>
+			</div>
+
+			<div class="p-10 bg-[#D9EDDF]">
+				<RelatedArtists {accessToken} {allTopArtistsShort}/>
 			</div>
 		</div>
 	</main>
