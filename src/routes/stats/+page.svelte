@@ -7,7 +7,7 @@
 	import Genres from '../../lib/components/Genres.svelte';
 	import Decade from '../../lib/components/Decade.svelte';
 	import AudioFeatures from '../../lib/components/AudioFeatures.svelte';
-	import TrackRecs from '../../lib/components/TrackRecs.svelte'
+	import TrackRecs from '../../lib/components/TrackRecs.svelte';
 	import RelatedArtists from '../../lib/components/RelatedArtists.svelte';
 	import Obscure from '../../lib/components/Obscure.svelte';
 
@@ -20,6 +20,7 @@
 	let allTopTracksShort;
 	let allTopArtistsLong;
 	let allTopArtistsShort;
+	let active = 'topItems';
 
 	// delete later
 	// profile = {
@@ -183,8 +184,10 @@
 					>
 					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 					<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-primary rounded-box w-52">
-						<li><a href="#">Item 1</a></li>
-						<li><a href="#">Item 2</a></li>
+						<li><a class:active={active === 'topItems'} on:click={() => active = 'topItems'}>Top Items</a></li>
+						<li><a class:active={active === 'audioFeatures'} on:click={() => active = 'audioFeatures'}>Audio Analysis</a></li>
+						<li><a class:active={active === 'obscure'} on:click={() => active = 'obscure'}>Most Obscure</a></li>
+						<li><a class:active={active === 'reccomendations'} on:click={() => active = 'reccomendations'}>Reccomendations</a></li>
 					</ul>
 				</div>
 				<p class="normal-case text-xl">My Spotify Stats</p>
@@ -204,43 +207,57 @@
 		<ul
 			class="menu menu-horizontal hidden sm:block sm:menu-vertical bg-primary w-full sm:w-60 p-3 sm:sticky sm:top-0 sm:h-screen"
 		>
-			<li><a>Top Items</a></li>
-			<li><a>Audio Analysis</a></li>
-			<li><a>Obscure</a></li>
-			<li><a>Reccomendations</a></li>
+			<li><a class:active={active === 'topItems'} on:click={() => active = 'topItems'}>Top Items</a></li>
+			<li><a class:active={active === 'audioFeatures'} on:click={() => active = 'audioFeatures'}>Audio Analysis</a></li>
+			<li><a class:active={active === 'obscure'} on:click={() => active = 'obscure'}>Most Obscure</a></li>
+			<li><a class:active={active === 'reccomendations'} on:click={() => active = 'reccomendations'}>Reccomendations</a></li>
 		</ul>
 
 		<div class="w-full">
-			<!-- <div id="" class="p-10 bg-[#D9EDDF]">
-				<p>tracks you can't get enough of right now</p>
-				<TopTracks {accessToken} userId={profile.id} />
-			</div> -->
-			<!--
-			<div class="p-10">
-				<p>these artists dominate your playlists</p>
-				<TopArtists {accessToken} />
-			</div>
+			{#if active === 'topItems'}
+				<div id="" class="p-10 bg-[#D9EDDF]">
+					<p>tracks you can't get enough of right now</p>
+					<TopTracks {accessToken} userId={profile.id} />
+				</div>
 
-			<div class="grid md:grid-cols-2">
-				<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort} /></div>
-				<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
-			</div> -->
+				<div class="p-10">
+					<p>these artists dominate your playlists</p>
+					<TopArtists {accessToken} />
+				</div>
 
-			<!-- <div id="" class="">
-				<AudioFeatures {accessToken} {allTopTracksLong} {allTopTracksShort} />
-			</div> -->
+				<div class="grid md:grid-cols-2">
+					<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort} /></div>
+					<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
+				</div>
+			{/if}
 
-			<!-- <div class="p-10">
-				<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id}/>
-			</div>
+			{#if active === 'audioFeatures'}
+				<div id="" class="">
+					<AudioFeatures {accessToken} {allTopTracksLong} {allTopTracksShort} />
+				</div>
+			{/if}
 
-			<div class="p-10 bg-[#D9EDDF]">
-				<RelatedArtists {accessToken} {allTopArtistsShort}/>
-			</div> -->
+			{#if active === 'obscure'}
+				<div class="p-10 bg-[#D9EDDF]">
+					<Obscure {allTopTracksLong} {allTopTracksShort} />
+				</div>
+			{/if}
 
-			<div class="p-10 bg-[#D9EDDF]">
-				<Obscure {allTopTracksLong} {allTopTracksShort}/>
-			</div>
+			{#if active === 'reccomendations'}
+				<div class="p-10">
+					<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id} />
+				</div>
+
+				<div class="p-10 bg-[#D9EDDF]">
+					<RelatedArtists {accessToken} {allTopArtistsShort} />
+				</div>
+			{/if}
 		</div>
 	</main>
 {/if}
+
+<style>
+	.active {
+		background-color: #59aa6e;
+	}
+</style>
