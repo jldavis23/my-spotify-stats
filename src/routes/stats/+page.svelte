@@ -7,6 +7,7 @@
 	import Genres from '../../lib/components/Genres.svelte';
 	import Decade from '../../lib/components/Decade.svelte';
 	import AudioFeatures from '../../lib/components/AudioFeatures.svelte';
+	import TrackRecs from '../../lib/components/TrackRecs.svelte'
 
 	const clientId = '';
 	let accessToken = null;
@@ -210,8 +211,8 @@
 			<!-- <div id="" class="p-10 bg-[#D9EDDF]">
 				<p>tracks you can't get enough of right now</p>
 				<TopTracks {accessToken} userId={profile.id} />
-			</div>
-
+			</div> -->
+			<!--
 			<div class="p-10">
 				<p>these artists dominate your playlists</p>
 				<TopArtists {accessToken} />
@@ -222,8 +223,12 @@
 				<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
 			</div> -->
 
-			<div id="" class="">
+			<!-- <div id="" class="">
 				<AudioFeatures {accessToken} {allTopTracksLong} {allTopTracksShort} />
+			</div> -->
+
+			<div class="p-10">
+				<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id}/>
 			</div>
 		</div>
 	</main>
