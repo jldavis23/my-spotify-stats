@@ -102,7 +102,7 @@
 </script>
 
 <div class="p-10">
-	<h2 class="text-4xl">Your Audio Features</h2>
+	<h2 class="text-4xl">Your Audio Analysis</h2>
 	<p>
 		Spotify measures audio features such as acousticness, danceability, and energy of individual
 		tracks. Lets analyze your top tracks and find your audio feature scores!
@@ -176,7 +176,7 @@
 		</div>
 	</div>
 
-	<div class="p-10 flex justify-between gap-9 flex-col items-center sm:items-end">
+	<div class="p-10 bg-[#EEFDF2] flex justify-between gap-9 flex-col items-center sm:items-end">
 		<div class="text-center sm:text-right">
 			<h3 class="text-3xl font-bold">Acousticness</h3>
 			<p>The higher the percentage, the more acoustic your music is overall.</p>
@@ -238,7 +238,7 @@
 		</div>
 	</div>
 
-	<div class="bg-[#D9EDDF] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
+	<div class="p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
 		<div class="text-center sm:text-left">
 			<h3 class="text-3xl font-bold">Energy</h3>
 			<p>
@@ -303,7 +303,7 @@
 		</div>
 	</div>
 
-	<div class="p-10 flex justify-between gap-9 flex-col items-center sm:items-end">
+	<div class="bg-[#D9EDDF] p-10 flex justify-between gap-9 flex-col items-center sm:items-end">
 		<div class="text-center sm:text-right">
 			<h3 class="text-3xl font-bold">Instrumentalness</h3>
 			<p>
@@ -370,7 +370,7 @@
 		</div>
 	</div>
 
-	<div class="bg-[#D9EDDF] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
+	<div class="bg-[#EEFDF2] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
 		<div class="text-center sm:text-left">
 			<h3 class="text-3xl font-bold">Valence</h3>
 			<p>

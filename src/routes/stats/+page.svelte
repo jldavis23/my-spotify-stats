@@ -9,6 +9,7 @@
 	import AudioFeatures from '../../lib/components/AudioFeatures.svelte';
 	import TrackRecs from '../../lib/components/TrackRecs.svelte'
 	import RelatedArtists from '../../lib/components/RelatedArtists.svelte';
+	import Obscure from '../../lib/components/Obscure.svelte';
 
 	const clientId = '';
 	let accessToken = null;
@@ -203,9 +204,10 @@
 		<ul
 			class="menu menu-horizontal hidden sm:block sm:menu-vertical bg-primary w-full sm:w-60 p-3 sm:sticky sm:top-0 sm:h-screen"
 		>
-			<li><a>Item 1</a></li>
-			<li><a>Item 2</a></li>
-			<li><a>Item 3</a></li>
+			<li><a>Top Items</a></li>
+			<li><a>Audio Analysis</a></li>
+			<li><a>Obscure</a></li>
+			<li><a>Reccomendations</a></li>
 		</ul>
 
 		<div class="w-full">
@@ -228,12 +230,16 @@
 				<AudioFeatures {accessToken} {allTopTracksLong} {allTopTracksShort} />
 			</div> -->
 
-			<div class="p-10">
+			<!-- <div class="p-10">
 				<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id}/>
 			</div>
 
 			<div class="p-10 bg-[#D9EDDF]">
 				<RelatedArtists {accessToken} {allTopArtistsShort}/>
+			</div> -->
+
+			<div class="p-10 bg-[#D9EDDF]">
+				<Obscure {allTopTracksLong} {allTopTracksShort}/>
 			</div>
 		</div>
 	</main>
