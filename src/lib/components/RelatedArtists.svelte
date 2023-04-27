@@ -15,9 +15,8 @@
     })
 
     const getRelatedArtists = async () => {
-        let random = Math.floor(Math.random() * (allTopArtistsShort.length+1));
+        let random = Math.floor(Math.random() * (allTopArtistsShort.length));
         let artistId = allTopArtistsShort[random].id
-        console.log(allTopArtistsShort[random].name)
 
         try {
 			const result = await fetch(
@@ -39,6 +38,7 @@
 			});
             
             allArtistRecs = artistRecs
+			console.log(allArtistRecs)
 			
 		} catch (err) {
 			console.log(err);
@@ -47,7 +47,7 @@
 </script>
 
 
-<h2 class="text-4xl ">Reccomended Artists</h2>
+<h2 class="text-4xl ">Artist Recommendations</h2>
 
 <button class="btn my-6 btn-sm" on:click={getRelatedArtists}>Refresh</button>
 	
@@ -57,8 +57,10 @@
 			<div class="flex items-center space-x-3 cursor-default p-2">
 
 				<div class="avatar">
-					<div class="w-12 h-12">
-						<img src={artist.images[0].url} />
+					<div class="w-12 h-12 bg-primary">
+						{#if artist.images[0]}
+							<img src={artist.images[0].url} />
+						{/if}
 					</div>
 				</div>
 

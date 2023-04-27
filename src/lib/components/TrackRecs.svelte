@@ -77,7 +77,7 @@
 	};
 </script>
 
-<h2 class="text-4xl">Track Reccommendations</h2>
+<h2 class="text-4xl">Track Recommendations</h2>
 
 <button class="btn my-6 btn-sm" on:click={findTrackRecs}>Refresh</button>
 
@@ -88,8 +88,10 @@
 			<div class="flex items-center space-x-3 cursor-default">
 
 				<div class="avatar">
-					<div class="w-12 h-12">
-						<img src={track.album.images[0].url} alt={track.album.name} />
+					<div class="w-12 h-12 bg-primary">
+						{#if track.album.images[0]}
+							<img src={track.album.images[0].url} alt={track.album.name} />
+						{/if}
 					</div>
 				</div>
 

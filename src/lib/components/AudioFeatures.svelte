@@ -142,8 +142,10 @@
 						<p class="">Most Danceable</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 b-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -161,8 +163,10 @@
 						<p class="">Least Danceable</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 b-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -204,8 +208,10 @@
 						<p class="">Most Acoustic</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 bg-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -223,8 +229,10 @@
 						<p class="">Least Acoustic</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 b-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -269,8 +277,10 @@
 						<p class="">Most Energy</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 bg-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -288,8 +298,10 @@
 						<p class="">Least Energy</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 bg-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -336,8 +348,10 @@
 						<p class="">Most Instrumental</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 bg-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -355,8 +369,10 @@
 						<p class="">Least Instrumental</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 bg-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -401,8 +417,10 @@
 						<p class="">Most Valent</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 bg-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 
@@ -420,8 +438,10 @@
 						<p class="">Least Valent</p>
 
 						<div class="avatar">
-							<div class="w-24 h-24">
-								<img src={track.album.images[0].url} alt={track.album.name} />
+							<div class="w-24 h-24 bg-primary">
+								{#if track.album.images[0]}
+									<img src={track.album.images[0].url} alt={track.album.name} />
+								{/if}
 							</div>
 						</div>
 

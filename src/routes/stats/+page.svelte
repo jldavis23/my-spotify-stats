@@ -187,7 +187,7 @@
 						<li><a class:active={active === 'topItems'} on:click={() => active = 'topItems'}>Top Items</a></li>
 						<li><a class:active={active === 'audioFeatures'} on:click={() => active = 'audioFeatures'}>Audio Analysis</a></li>
 						<li><a class:active={active === 'obscure'} on:click={() => active = 'obscure'}>Most Obscure</a></li>
-						<li><a class:active={active === 'reccomendations'} on:click={() => active = 'reccomendations'}>Reccomendations</a></li>
+						<li><a class:active={active === 'reccomendations'} on:click={() => active = 'reccomendations'}>Recommendations</a></li>
 					</ul>
 				</div>
 				<p class="normal-case text-xl">My Spotify Stats</p>

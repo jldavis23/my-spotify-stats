@@ -79,8 +79,10 @@ lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 				<p class="w-1/12">{index + 1}.</p>
 
 				<div class="avatar">
-					<div class="w-12 h-12">
-						<img src={artist.images[0].url} />
+					<div class="w-12 h-12 b-primary">
+						{#if artist.images[0]}
+							<img src={artist.images[0].url} />
+						{/if}
 					</div>
 				</div>
 

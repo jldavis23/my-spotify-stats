@@ -144,8 +144,10 @@ lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 				<p class="w-1/12">{index + 1}.</p>
 
 				<div class="avatar">
-					<div class="w-12 h-12">
-						<img src={track.album.images[0].url} alt={track.album.name} />
+					<div class="w-12 h-12 bg-primary">
+						{#if track.album.images[0]}
+							<img src={track.album.images[0].url} alt={track.album.name} />
+						{/if}
 					</div>
 				</div>
 

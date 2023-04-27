@@ -43,8 +43,10 @@
 		<div class="tooltip tooltip-primary" data-tip="Album: {track.album.name} | Duration: ">
 			<div class="flex items-center space-x-3 cursor-default">
 				<div class="avatar">
-					<div class="w-12 h-12">
-						<img src={track.album.images[0].url} alt={track.album.name} />
+					<div class="w-12 h-12 bg-primary">
+						{#if track.album.images[0]}
+							<img src={track.album.images[0].url} alt={track.album.name} />
+						{/if}
 					</div>
 				</div>
 
