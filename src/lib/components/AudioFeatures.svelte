@@ -55,7 +55,7 @@
 	const findTrackWithHighestScore = async (feature) => {
 		let highest = 0;
 		let trackWithHighestScore;
-		audioFeaturesLong.forEach((track) => {
+		audioFeaturesShort.forEach((track) => {
 			if (track[feature] > highest) {
 				highest = track[feature];
 				trackWithHighestScore = track;
@@ -79,7 +79,7 @@
 	const findTrackWithLowestScore = async (feature) => {
 		let lowest = 1;
 		let trackWithLowestScore;
-		audioFeaturesLong.forEach((track) => {
+		audioFeaturesShort.forEach((track) => {
 			if (track[feature] < lowest) {
 				lowest = track[feature];
 				trackWithLowestScore = track;
@@ -103,60 +103,335 @@
 
 <div class="p-10">
 	<h2 class="text-4xl">Your Audio Features</h2>
-	<p>paragraph explaining what this section is about</p>
+	<p>
+		Spotify measures audio features such as acousticness, danceability, and energy of individual
+		tracks. Lets analyze your top tracks and find your audio feature scores!
+	</p>
 </div>
 
 {#if audioFeaturesLong && audioFeaturesShort}
-	<div class="bg-[#D9EDDF] p-10 flex justify-between items-center gap-9 flex-col">
-		<h3 class="text-3xl font-bold">Danceability</h3>
-		<div class="grid sm:grid-cols-2 gap-9 text-center">
-			<div>
-				<p>CURRENT</p>
-				<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesShort, 'danceability')}</p>
+	<div class="bg-[#D9EDDF] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
+		<div class="text-center sm:text-left">
+			<h3 class="text-3xl font-bold">Danceability</h3>
+			<p>
+				The "danceability" of a track is measured through a combination of elements such as tempo,
+				rhythm stability, beat strength, and overall regularity. The higher the percentage, the more
+				"danceable" your music is!
+			</p>
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-10">
+			<div class="flex flex-col sm:flex-row md:flex-col gap-5">
+				<div class="text-center sm:text-left">
+					<p>CURRENT</p>
+					<p class="text-5xl text-primary-focus">
+						{getAverage(audioFeaturesShort, 'danceability')}
+					</p>
+				</div>
+				<div class="text-center sm:text-left">
+					<p>ALL TIME</p>
+					<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesLong, 'danceability')}</p>
+				</div>
 			</div>
-			<div>
-				<p>ALL TIME</p>
-				<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesLong, 'danceability')}</p>
+
+			<div class="flex flex-col sm:flex-row gap-5">
+				{#await findTrackWithHighestScore('danceability')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Most Danceable</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
+
+				{#await findTrackWithLowestScore('danceability')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Least Danceable</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
 			</div>
 		</div>
-		<div class="grid sm:grid-cols-2 gap-6">
-			{#await findTrackWithHighestScore('danceability')}
-				loading
-			{:then track}
-				<div class="text-center flex flex-col items-center gap-3">
-					<p class="">Most Danceable</p>
+	</div>
 
-					<div class="avatar">
-						<div class="w-24 h-24">
-							<img src={track.album.images[0].url} alt={track.album.name} />
+	<div class="p-10 flex justify-between gap-9 flex-col items-center sm:items-end">
+		<div class="text-center sm:text-right">
+			<h3 class="text-3xl font-bold">Acousticness</h3>
+			<p>The higher the percentage, the more acoustic your music is overall.</p>
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-10">
+			<div class="flex flex-col sm:flex-row md:flex-col gap-5">
+				<div class="text-center sm:text-left">
+					<p>CURRENT</p>
+					<p class="text-5xl text-primary-focus">
+						{getAverage(audioFeaturesShort, 'acousticness')}
+					</p>
+				</div>
+				<div class="text-center sm:text-left">
+					<p>ALL TIME</p>
+					<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesLong, 'acousticness')}</p>
+				</div>
+			</div>
+
+			<div class="flex flex-col sm:flex-row gap-5">
+				{#await findTrackWithHighestScore('acousticness')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Most Acoustic</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
 					</div>
+				{/await}
 
-					<div class="">
-						<div class="font-bold">{track.name}</div>
-						<div class="text-sm opacity-50">{track.artists[0].name}</div>
-					</div>
-				</div>
-			{/await}
+				{#await findTrackWithLowestScore('acousticness')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Least Acoustic</p>
 
-			{#await findTrackWithLowestScore('danceability')}
-				loading
-			{:then track}
-				<div class="text-center flex flex-col items-center gap-3">
-					<p class="">Least Danceable</p>
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
 
-					<div class="avatar">
-						<div class="w-24 h-24">
-							<img src={track.album.images[0].url} alt={track.album.name} />
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
 					</div>
+				{/await}
+			</div>
+		</div>
+	</div>
 
-					<div class="">
-						<div class="font-bold">{track.name}</div>
-						<div class="text-sm opacity-50">{track.artists[0].name}</div>
-					</div>
+	<div class="bg-[#D9EDDF] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
+		<div class="text-center sm:text-left">
+			<h3 class="text-3xl font-bold">Energy</h3>
+			<p>
+				The energy of a track is determined by measuring intensity and activity. The higher your
+				percentage is, the more energetic your music is.
+			</p>
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-10">
+			<div class="flex flex-col sm:flex-row md:flex-col gap-5">
+				<div class="text-center sm:text-left">
+					<p>CURRENT</p>
+					<p class="text-5xl text-primary-focus">
+						{getAverage(audioFeaturesShort, 'energy')}
+					</p>
 				</div>
-			{/await}
+				<div class="text-center sm:text-left">
+					<p>ALL TIME</p>
+					<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesLong, 'energy')}</p>
+				</div>
+			</div>
+
+			<div class="flex flex-col sm:flex-row gap-5">
+				{#await findTrackWithHighestScore('energy')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Most Energy</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
+
+				{#await findTrackWithLowestScore('energy')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Least Energy</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
+			</div>
+		</div>
+	</div>
+
+	<div class="p-10 flex justify-between gap-9 flex-col items-center sm:items-end">
+		<div class="text-center sm:text-right">
+			<h3 class="text-3xl font-bold">Instrumentalness</h3>
+			<p>
+				A low percentage indicates the music your listen to is mostly vocal. A higher percentage
+				indicates your music is mostly instrumental.
+			</p>
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-10">
+			<div class="flex flex-col sm:flex-row md:flex-col gap-5">
+				<div class="text-center sm:text-left">
+					<p>CURRENT</p>
+					<p class="text-5xl text-primary-focus">
+						{getAverage(audioFeaturesShort, 'instrumentalness')}
+					</p>
+				</div>
+				<div class="text-center sm:text-left">
+					<p>ALL TIME</p>
+					<p class="text-5xl text-primary-focus">
+						{getAverage(audioFeaturesLong, 'instrumentalness')}
+					</p>
+				</div>
+			</div>
+
+			<div class="flex flex-col sm:flex-row gap-5">
+				{#await findTrackWithHighestScore('instrumentalness')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Most Instrumental</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
+
+				{#await findTrackWithLowestScore('instrumentalness')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Least Instrumental</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
+			</div>
+		</div>
+	</div>
+
+	<div class="bg-[#D9EDDF] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
+		<div class="text-center sm:text-left">
+			<h3 class="text-3xl font-bold">Valence</h3>
+			<p>
+				The valence of a track refers to its musical positiveness. The higher your percentage, the
+				more positive/happy your music is.
+			</p>
+		</div>
+
+		<div class="flex flex-col md:flex-row gap-10">
+			<div class="flex flex-col sm:flex-row md:flex-col gap-5">
+				<div class="text-center sm:text-left">
+					<p>CURRENT</p>
+					<p class="text-5xl text-primary-focus">
+						{getAverage(audioFeaturesShort, 'valence')}
+					</p>
+				</div>
+				<div class="text-center sm:text-left">
+					<p>ALL TIME</p>
+					<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesLong, 'valence')}</p>
+				</div>
+			</div>
+
+			<div class="flex flex-col sm:flex-row gap-5">
+				{#await findTrackWithHighestScore('valence')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Most Valent</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
+
+				{#await findTrackWithLowestScore('valence')}
+					loading
+				{:then track}
+					<div class="text-center">
+						<p class="">Least Valent</p>
+
+						<div class="avatar">
+							<div class="w-24 h-24">
+								<img src={track.album.images[0].url} alt={track.album.name} />
+							</div>
+						</div>
+
+						<div class="">
+							<div class="font-bold">{track.name}</div>
+							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+						</div>
+					</div>
+				{/await}
+			</div>
 		</div>
 	</div>
 {/if}
