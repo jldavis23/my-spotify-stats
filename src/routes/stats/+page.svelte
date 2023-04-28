@@ -12,7 +12,7 @@
 	import ObscureTracks from '../../lib/components/ObscureTracks.svelte';
 	import ObscureArtists from '../../lib/components/ObscureArtists.svelte';
 
-	const clientId = '';
+	const clientId = '00867bbf4f294a7ea0b4f12c47190c0c';
 	let accessToken = null;
 	let code;
 	let isAuthenticated = false;

@@ -2,7 +2,6 @@
 	//Imports
 	import { onMount } from 'svelte';
 	import SongModal from './SongModal.svelte';
-	import { topTracksLong } from './../store/store.js'
 
 	//Props
 	export let accessToken;
@@ -12,13 +11,11 @@
 	let tracks = [];
 	let trackUris = [];
 	let btnTimeFrame;
-
-	$:console.log(tracks)
+	let selectedTrack;
 
 	//Functions
 	onMount(async () => {
 		tracks = await fetchTopTracks('long_term');
-		// topTracksLong.set(tracks)
 	});
 
 	async function fetchTopTracks(timeFrame) {
@@ -77,17 +74,6 @@
 		}
 	};
 
-	const convertToMinSec = (duration) => {
-		let totalMinutes = duration / 1000 / 60;
-		let seconds = Math.round((totalMinutes % Math.floor(totalMinutes)) * 60);
-		let minutes = Math.floor(totalMinutes);
-		if (seconds < 10) {
-			return `${minutes}:0${seconds}`;
-		} else {
-			return `${minutes}:${seconds}`;
-		}
-	};
-
 	// tracks = [
 	// 	{
 	// 		name: 'For Youth',
@@ -139,8 +125,8 @@ md:grid-flow-col md:grid-cols-2 md:grid-rows-[repeat(10,_minmax(0,_1fr))]
 lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 >
 	{#each tracks as track, index}
-		<div class="tooltip tooltip-primary" data-tip="Album: {track.album.name} | Duration: {convertToMinSec(track.duration_ms)}">
-			<div class="flex items-center space-x-3 cursor-default">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedTrack = track} for="my-modal-6">
 				<p class="w-1/12">{index + 1}.</p>
 
 				<div class="avatar">
@@ -155,13 +141,13 @@ lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 					<div class="font-bold">{track.name}</div>
 					<div class="text-sm opacity-50">{track.artists[0].name}</div>
 				</div>
-			</div>
-		</div>
+			</label>
 	{/each}
 </div>
 
-<!-- {#if selectedTrack}
+{#if selectedTrack}
 	<SongModal {selectedTrack}/>
-{/if} -->
+{/if}
+
 
 <button class="btn" on:click={() => createPlaylist(btnTimeFrame)}>+ Create Playlist</button>
