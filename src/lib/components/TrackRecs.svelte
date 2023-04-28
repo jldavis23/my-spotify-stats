@@ -1,6 +1,7 @@
 <script>
 	//Imports
 	import { onMount } from 'svelte';
+	import SongModal from './SongModal.svelte';
 
 	//Props
 	export let accessToken;
@@ -9,6 +10,7 @@
 
 	//Variables
 	let allTrackRecs = [];
+	let selectedTrack;
 
 	//Functions
 	onMount(async () => {
@@ -84,7 +86,8 @@
 <div
 	class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 	{#each allTrackRecs as track}
-		<a href={track.external_urls.spotify} target="_blank" class="flex items-center space-x-3">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedTrack = track} for="my-modal-6">
 
 			<div class="avatar">
 				<div class="w-12 h-12 bg-primary">
@@ -98,12 +101,12 @@
 				<div class="font-bold">{track.name}</div>
 				<div class="text-sm opacity-50">{track.artists[0].name}</div>
 			</div>
-		</a>
+		</label>
 	{/each}
 </div>
 
-<!-- {#if selectedTrack}
+{#if selectedTrack}
 	<SongModal {selectedTrack}/>
-{/if} -->
+{/if}
 
 <button class="btn my-6" on:click={() => createPlaylist()}>+ Create Playlist</button>

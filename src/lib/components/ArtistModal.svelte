@@ -4,10 +4,7 @@
 	export let accessToken;
 	export let userCountry;
 
-	//Variables
-	// let artistTopTracks = []
-	// $: selectedArtist, findArtistTopTracks()
-
+	//Functions
 	const findArtistTopTracks = async (artist) => {
 		try {
 			const result = await fetch(
@@ -19,7 +16,6 @@
 			);
 
 			const artistData = await result.json();
-			// artistTopTracks = artistData.tracks.slice(0,5);
 			return artistData.tracks.slice(0, 5);
 		} catch (err) {
 			console.log(err);

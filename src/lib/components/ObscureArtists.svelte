@@ -1,13 +1,17 @@
 <script>
 	//Imports
 	import { onMount } from 'svelte';
+	import ArtistModal from './ArtistModal.svelte';
 
 	//Props
 	export let allTopArtistsShort;
 	export let allTopArtistsLong;
+	export let userCountry;
+	export let accessToken
 
 	//Variables
 	let topObscureArtists = [];
+	let selectedArtist;
 
 	//Functions
 	const findObscureArtists = () => {
@@ -40,20 +44,23 @@
 
 <div class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 	{#each topObscureArtists as artist}
-		<div class="tooltip tooltip-primary" data-tip="Album:  | Duration:">
-			<div class="flex items-center space-x-3 cursor-default p-2">
-				<div class="avatar">
-					<div class="w-12 h-12 bg-primary">
-						{#if artist.images[0]}
-							<img src={artist.images[0].url} />
-						{/if}
-					</div>
-				</div>
-
-				<div class="text-left">
-					<div class="font-bold">{artist.name}</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedArtist = artist} for="my-modal-5">
+			<div class="avatar">
+				<div class="w-12 h-12 bg-primary">
+					{#if artist.images[0]}
+						<img src={artist.images[0].url} />
+					{/if}
 				</div>
 			</div>
-		</div>
+
+			<div class="text-left">
+				<div class="font-bold">{artist.name}</div>
+			</div>
+		</label>
 	{/each}
 </div>
+
+{#if selectedArtist}
+	<ArtistModal {selectedArtist} {accessToken} {userCountry}/>
+{/if}

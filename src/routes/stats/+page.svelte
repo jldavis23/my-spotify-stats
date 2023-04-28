@@ -246,7 +246,7 @@
 				</div>
 
 				<div class="p-10">
-					<ObscureArtists {allTopArtistsShort} {allTopArtistsLong}/>
+					<ObscureArtists {allTopArtistsShort} {allTopArtistsLong} userCountry={profile.country} {accessToken}/>
 				</div>
 			{/if}
 
@@ -256,7 +256,7 @@
 				</div>
 
 				<div class="p-10 bg-[#D9EDDF]">
-					<RelatedArtists {accessToken} {allTopArtistsShort} />
+					<RelatedArtists {accessToken} {allTopArtistsShort} userCountry={profile.country}/>
 				</div>
 			{/if}
 		</div>
