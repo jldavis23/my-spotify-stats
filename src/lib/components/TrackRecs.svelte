@@ -84,23 +84,21 @@
 <div
 	class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 	{#each allTrackRecs as track}
-		<div class="tooltip tooltip-primary" data-tip="Album: {track.album.name} | Duration: ">
-			<div class="flex items-center space-x-3 cursor-default">
+		<a href={track.external_urls.spotify} target="_blank" class="flex items-center space-x-3">
 
-				<div class="avatar">
-					<div class="w-12 h-12 bg-primary">
-						{#if track.album.images[0]}
-							<img src={track.album.images[0].url} alt={track.album.name} />
-						{/if}
-					</div>
-				</div>
-
-				<div class="text-left">
-					<div class="font-bold">{track.name}</div>
-					<div class="text-sm opacity-50">{track.artists[0].name}</div>
+			<div class="avatar">
+				<div class="w-12 h-12 bg-primary">
+					{#if track.album.images[0]}
+						<img src={track.album.images[0].url} alt={track.album.name} />
+					{/if}
 				</div>
 			</div>
-		</div>
+
+			<div class="text-left">
+				<div class="font-bold">{track.name}</div>
+				<div class="text-sm opacity-50">{track.artists[0].name}</div>
+			</div>
+		</a>
 	{/each}
 </div>
 

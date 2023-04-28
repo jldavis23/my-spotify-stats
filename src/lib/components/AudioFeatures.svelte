@@ -138,7 +138,7 @@
 				{#await findTrackWithHighestScore('danceability')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Most Danceable</p>
 
 						<div class="avatar">
@@ -153,13 +153,13 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 
 				{#await findTrackWithLowestScore('danceability')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Least Danceable</p>
 
 						<div class="avatar">
@@ -174,7 +174,7 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 			</div>
 		</div>
@@ -204,7 +204,7 @@
 				{#await findTrackWithHighestScore('acousticness')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Most Acoustic</p>
 
 						<div class="avatar">
@@ -219,13 +219,13 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 
 				{#await findTrackWithLowestScore('acousticness')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Least Acoustic</p>
 
 						<div class="avatar">
@@ -240,7 +240,7 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 			</div>
 		</div>
@@ -273,7 +273,7 @@
 				{#await findTrackWithHighestScore('energy')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Most Energy</p>
 
 						<div class="avatar">
@@ -288,13 +288,13 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 
 				{#await findTrackWithLowestScore('energy')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Least Energy</p>
 
 						<div class="avatar">
@@ -309,7 +309,7 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 			</div>
 		</div>
@@ -344,7 +344,7 @@
 				{#await findTrackWithHighestScore('instrumentalness')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Most Instrumental</p>
 
 						<div class="avatar">
@@ -359,13 +359,13 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 
 				{#await findTrackWithLowestScore('instrumentalness')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Least Instrumental</p>
 
 						<div class="avatar">
@@ -380,7 +380,7 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 			</div>
 		</div>
@@ -413,7 +413,7 @@
 				{#await findTrackWithHighestScore('valence')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Most Valent</p>
 
 						<div class="avatar">
@@ -428,13 +428,13 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 
 				{#await findTrackWithLowestScore('valence')}
 					loading
 				{:then track}
-					<div class="text-center">
+					<a href={track.external_urls.spotify} target="_blank" class="text-center">
 						<p class="">Least Valent</p>
 
 						<div class="avatar">
@@ -449,7 +449,7 @@
 							<div class="font-bold">{track.name}</div>
 							<div class="text-sm opacity-50">{track.artists[0].name}</div>
 						</div>
-					</div>
+					</a>
 				{/await}
 			</div>
 		</div>

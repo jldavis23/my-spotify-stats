@@ -1,6 +1,7 @@
 <script>
 	//Imports
 	import { onMount } from 'svelte';
+	import SongModal from './SongModal.svelte';
 
 	//Props
 	export let accessToken;
@@ -9,6 +10,7 @@
 
 	//Variables
 	let topObscureTracks = [];
+	let selectedTrack;
 
 	//Functions
 	onMount(async () => {
@@ -72,21 +74,24 @@
 
 <div class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 	{#each topObscureTracks as track}
-		<div class="tooltip tooltip-primary" data-tip="Album: {track.album.name} | Duration: ">
-			<div class="flex items-center space-x-3 cursor-default">
-				<div class="avatar">
-					<div class="w-12 h-12 bg-primary">
-						{#if track.album.images[0]}
-							<img src={track.album.images[0].url} alt={track.album.name} />
-						{/if}
-					</div>
-				</div>
-
-				<div class="text-left">
-					<div class="font-bold">{track.name}</div>
-					<div class="text-sm opacity-50">{track.artists[0].name}</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedTrack = track} for="my-modal-6">
+			<div class="avatar">
+				<div class="w-12 h-12 bg-primary">
+					{#if track.album.images[0]}
+						<img src={track.album.images[0].url} alt={track.album.name} />
+					{/if}
 				</div>
 			</div>
-		</div>
+
+			<div class="text-left">
+				<div class="font-bold">{track.name}</div>
+				<div class="text-sm opacity-50">{track.artists[0].name}</div>
+			</div>
+		</label>
 	{/each}
 </div>
+
+{#if selectedTrack}
+	<SongModal {selectedTrack}/>
+{/if}
