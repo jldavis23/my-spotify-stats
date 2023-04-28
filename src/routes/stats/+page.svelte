@@ -23,6 +23,8 @@
 	let allTopArtistsShort;
 	let active = 'topItems';
 
+	$: console.log(profile)
+
 	// delete later
 	// profile = {
 	// 	display_name: 'George',
@@ -223,7 +225,7 @@
 
 				<div class="p-10">
 					<p>these artists dominate your playlists</p>
-					<TopArtists {accessToken} />
+					<TopArtists {accessToken} userCountry={profile.country}/>
 				</div>
 
 				<div class="grid md:grid-cols-2">

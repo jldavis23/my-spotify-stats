@@ -24,7 +24,7 @@
 			<div class="flex gap-3">
 				<div class="w-16 h-16 bg-primary">
 					{#if selectedTrack.album.images[0]}
-						<img src={selectedTrack.album.images[2].url} class="w-16 h-16"/>
+						<img src={selectedTrack.album.images[0].url} class="w-16 h-16"/>
 					{/if}
 				</div>
 				<div>
@@ -63,7 +63,7 @@
 			<p>{selectedTrack.album.release_date}</p>
 		</div>
 
-		<a href={selectedTrack.external_urls.spotify} target="_blank" class="btn btn-sm btn-primary"
+		<a href={selectedTrack.external_urls.spotify} target="_blank" class="btn btn-sm btn-primary my-3"
 			>Listen on Spotify</a
 		>
 
