@@ -9,7 +9,8 @@
 	import AudioFeatures from '../../lib/components/AudioFeatures.svelte';
 	import TrackRecs from '../../lib/components/TrackRecs.svelte';
 	import RelatedArtists from '../../lib/components/RelatedArtists.svelte';
-	import Obscure from '../../lib/components/Obscure.svelte';
+	import ObscureTracks from '../../lib/components/ObscureTracks.svelte';
+	import ObscureArtists from '../../lib/components/ObscureArtists.svelte';
 
 	const clientId = '';
 	let accessToken = null;
@@ -187,7 +188,7 @@
 						<li><a class:active={active === 'topItems'} on:click={() => active = 'topItems'}>Top Items</a></li>
 						<li><a class:active={active === 'audioFeatures'} on:click={() => active = 'audioFeatures'}>Audio Analysis</a></li>
 						<li><a class:active={active === 'obscure'} on:click={() => active = 'obscure'}>Most Obscure</a></li>
-						<li><a class:active={active === 'reccomendations'} on:click={() => active = 'reccomendations'}>Recommendations</a></li>
+						<li><a class:active={active === 'recommendations'} on:click={() => active = 'recommendations'}>Recommendations</a></li>
 					</ul>
 				</div>
 				<p class="normal-case text-xl">My Spotify Stats</p>
@@ -210,7 +211,7 @@
 			<li><a class:active={active === 'topItems'} on:click={() => active = 'topItems'}>Top Items</a></li>
 			<li><a class:active={active === 'audioFeatures'} on:click={() => active = 'audioFeatures'}>Audio Analysis</a></li>
 			<li><a class:active={active === 'obscure'} on:click={() => active = 'obscure'}>Most Obscure</a></li>
-			<li><a class:active={active === 'reccomendations'} on:click={() => active = 'reccomendations'}>Reccomendations</a></li>
+			<li><a class:active={active === 'recommendations'} on:click={() => active = 'recommendations'}>Recommendations</a></li>
 		</ul>
 
 		<div class="w-full">
@@ -239,11 +240,15 @@
 
 			{#if active === 'obscure'}
 				<div class="p-10 bg-[#D9EDDF]">
-					<Obscure {allTopTracksLong} {allTopTracksShort} />
+					<ObscureTracks {accessToken} {allTopTracksLong} {allTopTracksShort}/>
+				</div>
+
+				<div class="p-10">
+					<ObscureArtists {allTopArtistsShort} {allTopArtistsLong}/>
 				</div>
 			{/if}
 
-			{#if active === 'reccomendations'}
+			{#if active === 'recommendations'}
 				<div class="p-10">
 					<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id} />
 				</div>
