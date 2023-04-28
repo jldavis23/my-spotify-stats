@@ -73,29 +73,6 @@
 			console.log(err);
 		}
 	};
-
-	// tracks = [
-	// 	{
-	// 		name: 'For Youth',
-	// 		artists: [{ name: 'BTS' }],
-	// 		album: {
-	// 			name: 'PROOF',
-	// 			images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
-	// 		},
-	// 		duration_ms: 207959,
-	// 		popularity: 69
-	// 	},
-	// 	{
-	// 		name: 'For Youth',
-	// 		artists: [{ name: 'BTS' }],
-	// 		album: {
-	// 			name: 'PROOF',
-	// 			images: [{ url: 'https://pngimg.com/uploads/square/square_PNG11.png' }]
-	// 		},
-	// 		duration_ms: 207959,
-	// 		popularity: 69
-	// 	}
-	// ];
 </script>
 
 <div class="lg:flex items-center gap-12 ">
@@ -125,23 +102,23 @@ md:grid-flow-col md:grid-cols-2 md:grid-rows-[repeat(10,_minmax(0,_1fr))]
 lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 >
 	{#each tracks as track, index}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedTrack = track} for="my-modal-6">
-				<p class="w-1/12">{index + 1}.</p>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedTrack = track} for="my-modal-6">
+			<p class="w-1/12">{index + 1}.</p>
 
-				<div class="avatar">
-					<div class="w-12 h-12 bg-primary">
-						{#if track.album.images[0]}
-							<img src={track.album.images[0].url} alt={track.album.name} />
-						{/if}
-					</div>
+			<div class="avatar">
+				<div class="w-12 h-12 bg-primary">
+					{#if track.album.images[0]}
+						<img src={track.album.images[0].url} alt={track.album.name} />
+					{/if}
 				</div>
+			</div>
 
-				<div class="text-left">
-					<div class="font-bold">{track.name}</div>
-					<div class="text-sm opacity-50">{track.artists[0].name}</div>
-				</div>
-			</label>
+			<div class="text-left">
+				<div class="font-bold">{track.name}</div>
+				<div class="text-sm opacity-50">{track.artists[0].name}</div>
+			</div>
+		</label>
 	{/each}
 </div>
 

@@ -12,8 +12,6 @@
 	let btnTimeFrame;
 	let selectedArtist;
 
-    $: console.log(artists)
-
 	//Functions
 	onMount(async () => {
 		fetchTopArtists('long_term')

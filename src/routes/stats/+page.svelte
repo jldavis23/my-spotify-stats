@@ -11,6 +11,7 @@
 	import RelatedArtists from '../../lib/components/RelatedArtists.svelte';
 	import ObscureTracks from '../../lib/components/ObscureTracks.svelte';
 	import ObscureArtists from '../../lib/components/ObscureArtists.svelte';
+	import RecentlyPlayed from '../../lib/components/RecentlyPlayed.svelte';
 
 	const clientId = '00867bbf4f294a7ea0b4f12c47190c0c';
 	let accessToken = null;
@@ -22,8 +23,7 @@
 	let allTopArtistsLong;
 	let allTopArtistsShort;
 	let active = 'topItems';
-
-	$: console.log(profile)
+	let currentlyPlaying;
 
 	// delete later
 	// profile = {
@@ -42,13 +42,17 @@
 			isAuthenticated = true;
 			accessToken = await getAccessToken(clientId, code);
 			profile = await fetchProfile(accessToken);
+			await getCurrentlyPlaying();
 
 			allTopTracksLong = await fetchAllTopTracks('long_term');
 			allTopTracksShort = await fetchAllTopTracks('short_term');
 			allTopArtistsLong = await fetchAllTopArtists('long_term');
 			allTopArtistsShort = await fetchAllTopArtists('short_term');
+			
 		}
 	});
+
+	$: active, getCurrentlyPlaying();
 
 	async function redirectToAuthCodeFlow(clientId) {
 		const verifier = generateCodeVerifier(128);
@@ -62,7 +66,7 @@
 		params.append('redirect_uri', 'http://localhost:5490/stats');
 		params.append(
 			'scope',
-			'user-read-private user-read-email user-top-read user-read-currently-playing playlist-modify-public playlist-modify-private'
+			'user-read-private user-read-email user-top-read user-read-currently-playing user-read-recently-played playlist-modify-public playlist-modify-private'
 		);
 		params.append('code_challenge_method', 'S256');
 		params.append('code_challenge', challenge);
@@ -160,11 +164,28 @@
 			console.log(err);
 		}
 	}
+
+	async function getCurrentlyPlaying() {
+		try {
+			const result = await fetch(
+				`https://api.spotify.com/v1/me/player/currently-playing?market=${profile.country}`,
+				{
+					method: 'GET',
+					headers: { Authorization: `Bearer ${accessToken}` }
+				}
+			);
+
+			const data = await result.json();
+			currentlyPlaying = data.item;
+		} catch (err) {
+			currentlyPlaying = 'none'
+		}
+	}
 </script>
 
 {#if !isAuthenticated}
 	<h1>LOADING</h1>
-{:else if profile && allTopTracksLong && allTopArtistsLong && allTopTracksShort && allTopArtistsShort}
+{:else if profile && allTopTracksLong && allTopArtistsLong && allTopTracksShort && allTopArtistsShort && currentlyPlaying}
 	<div class="bg-neutral text-neutral-content">
 		<div class="navbar">
 			<div class="flex-1">
@@ -187,20 +208,54 @@
 					>
 					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 					<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-primary rounded-box w-52">
-						<li><a class:active={active === 'topItems'} on:click={() => active = 'topItems'}>Top Items</a></li>
-						<li><a class:active={active === 'audioFeatures'} on:click={() => active = 'audioFeatures'}>Audio Analysis</a></li>
-						<li><a class:active={active === 'obscure'} on:click={() => active = 'obscure'}>Most Obscure</a></li>
-						<li><a class:active={active === 'recommendations'} on:click={() => active = 'recommendations'}>Recommendations</a></li>
+						<li>
+							<a class:active={active === 'topItems'} on:click={() => (active = 'topItems')}
+								>Top Items</a
+							>
+						</li>
+						<li>
+							<a
+								class:active={active === 'audioFeatures'}
+								on:click={() => (active = 'audioFeatures')}>Audio Analysis</a
+							>
+						</li>
+						<li>
+							<a class:active={active === 'obscure'} on:click={() => (active = 'obscure')}
+								>Most Obscure</a
+							>
+						</li>
+						<li>
+							<a
+								class:active={active === 'recommendations'}
+								on:click={() => (active = 'recommendations')}>Recommendations</a
+							>
+						</li>
 					</ul>
 				</div>
 				<p class="normal-case text-xl">My Spotify Stats</p>
 			</div>
 			<div class="flex-none gap-2">
 				<p>{profile.display_name}</p>
-				<div class="avatar">
-					<div class="w-10 rounded-full">
-						<img src={profile.images[0].url} alt="avatar" />
-					</div>
+				<div class="dropdown dropdown-end">
+					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+					<!-- svelte-ignore a11y-label-has-associated-control -->
+					<label tabindex="0" class="btn btn-ghost btn-circle avatar">
+						<div class="w-10 rounded-full">
+							<img src={profile.images[0].url} alt="avatar" />
+						</div>
+					</label>
+					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+					<ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box text-primary-content w-52">
+						<p class="p-3 text-primary-focus">
+							{#if currentlyPlaying === 'none'}
+								Currently Playing: none
+							{:else}
+								Currently Playing: {currentlyPlaying.name} by {currentlyPlaying.artists[0].name}
+							{/if}
+						</p>
+
+						<li><a on:click={() => (active = 'recentlyPlayed')}>Recently Played</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -210,10 +265,23 @@
 		<ul
 			class="menu menu-horizontal hidden sm:block sm:menu-vertical bg-primary w-full sm:w-60 p-3 sm:sticky sm:top-0 sm:h-screen"
 		>
-			<li><a class:active={active === 'topItems'} on:click={() => active = 'topItems'}>Top Items</a></li>
-			<li><a class:active={active === 'audioFeatures'} on:click={() => active = 'audioFeatures'}>Audio Analysis</a></li>
-			<li><a class:active={active === 'obscure'} on:click={() => active = 'obscure'}>Most Obscure</a></li>
-			<li><a class:active={active === 'recommendations'} on:click={() => active = 'recommendations'}>Recommendations</a></li>
+			<li>
+				<a class:active={active === 'topItems'} on:click={() => (active = 'topItems')}>Top Items</a>
+			</li>
+			<li>
+				<a class:active={active === 'audioFeatures'} on:click={() => (active = 'audioFeatures')}
+					>Audio Analysis</a
+				>
+			</li>
+			<li>
+				<a class:active={active === 'obscure'} on:click={() => (active = 'obscure')}>Most Obscure</a
+				>
+			</li>
+			<li>
+				<a class:active={active === 'recommendations'} on:click={() => (active = 'recommendations')}
+					>Recommendations</a
+				>
+			</li>
 		</ul>
 
 		<div class="w-full">
@@ -225,7 +293,7 @@
 
 				<div class="p-10">
 					<p>these artists dominate your playlists</p>
-					<TopArtists {accessToken} userCountry={profile.country}/>
+					<TopArtists {accessToken} userCountry={profile.country} />
 				</div>
 
 				<div class="grid md:grid-cols-2">
@@ -242,11 +310,16 @@
 
 			{#if active === 'obscure'}
 				<div class="p-10 bg-[#D9EDDF]">
-					<ObscureTracks {accessToken} {allTopTracksLong} {allTopTracksShort}/>
+					<ObscureTracks {accessToken} {allTopTracksLong} {allTopTracksShort} />
 				</div>
 
 				<div class="p-10">
-					<ObscureArtists {allTopArtistsShort} {allTopArtistsLong} userCountry={profile.country} {accessToken}/>
+					<ObscureArtists
+						{allTopArtistsShort}
+						{allTopArtistsLong}
+						userCountry={profile.country}
+						{accessToken}
+					/>
 				</div>
 			{/if}
 
@@ -256,7 +329,13 @@
 				</div>
 
 				<div class="p-10 bg-[#D9EDDF]">
-					<RelatedArtists {accessToken} {allTopArtistsShort} userCountry={profile.country}/>
+					<RelatedArtists {accessToken} {allTopArtistsShort} userCountry={profile.country} />
+				</div>
+			{/if}
+
+			{#if active === 'recentlyPlayed'}
+				<div class="p-10">
+					<RecentlyPlayed {accessToken} />
 				</div>
 			{/if}
 		</div>
