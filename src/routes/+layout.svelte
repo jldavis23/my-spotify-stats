@@ -9,8 +9,11 @@
 
 <footer class="footer footer-center p-10 bg-neutral text-neutral-content">
 	<div class="grid grid-flow-col gap-4">
-		<a class="link link-hover">About</a>
+		<a href="/about" class="link link-hover">About</a>
 		<a href="/privacy" class="link link-hover">Privacy Policy</a>
-        <a class="link link-hover">Logout</a>
 	</div>
+	
 </footer>
+<div class="text-center p-4 bg-base-300 text-base-content">
+	<p>Created by Jacey Davis for DGM 3780</p>
+</div>
