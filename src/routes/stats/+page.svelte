@@ -274,7 +274,7 @@
 		</div>
 	</div>
 
-	<main class="sm:flex max-w-[1400px]">
+	<main class="sm:flex">
 		<ul
 			class="menu menu-horizontal hidden sm:block sm:menu-vertical bg-primary w-full sm:w-60 p-3 sm:sticky sm:top-0 sm:h-screen"
 		>
@@ -299,19 +299,25 @@
 		<div class="w-full">
 			{#if active === 'topItems'}
 				<div transition:fly={{ duration: 300, y: 100 }}>
-					<div id="" class="p-10 bg-[#D9EDDF]">
-						<p>tracks you can't get enough of right now</p>
-						<TopTracks {accessToken} userId={profile.id} />
+					<div class="p-10 bg-[#D9EDDF]">
+						<div class="max-w-[1400px]">
+							<p>tracks you can't get enough of right now</p>
+							<TopTracks {accessToken} userId={profile.id} />
+						</div>
 					</div>
 
-					<div class="p-10">
+					<div class="p-10 max-w-[1400px]">
 						<p>these artists dominate your playlists</p>
 						<TopArtists {accessToken} userCountry={profile.country} />
 					</div>
 
-					<div class="grid md:grid-cols-2">
-						<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort} /></div>
-						<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
+					<div class="bg-[#EEFDF2]">
+						<div class="grid md:grid-cols-2 max-w-[1400px]">
+							<div class="p-10 bg-[#D9EDDF]">
+								<Genres {allTopArtistsLong} {allTopArtistsShort} />
+							</div>
+							<div class="p-10"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
+						</div>
 					</div>
 				</div>
 			{/if}
@@ -324,11 +330,13 @@
 
 			{#if active === 'obscure'}
 				<div transition:fly={{ duration: 300, y: 100 }}>
-					<div class="p-10 bg-[#D9EDDF]">
-						<ObscureTracks {accessToken} {allTopTracksLong} {allTopTracksShort} />
+					<div class="bg-[#D9EDDF]">
+						<div class="p-10 max-w-[1400px]">
+							<ObscureTracks {accessToken} {allTopTracksLong} {allTopTracksShort} />
+						</div>
 					</div>
 
-					<div class="p-10">
+					<div class="p-10 max-w-[1400px]">
 						<ObscureArtists
 							{allTopArtistsShort}
 							{allTopArtistsLong}
@@ -341,18 +349,20 @@
 
 			{#if active === 'recommendations'}
 				<div transition:fly={{ duration: 300, y: 100 }}>
-					<div class="p-10">
+					<div class="p-10 max-w-[1400px]">
 						<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id} />
 					</div>
 
-					<div class="p-10 bg-[#D9EDDF]">
-						<RelatedArtists {accessToken} {allTopArtistsShort} userCountry={profile.country} />
+					<div class="bg-[#D9EDDF]">
+						<div class="p-10 max-w-[1400px]">
+							<RelatedArtists {accessToken} {allTopArtistsShort} userCountry={profile.country} />
+						</div>
 					</div>
 				</div>
 			{/if}
 
 			{#if active === 'recentlyPlayed'}
-				<div class="p-10" transition:fly={{ duration: 300, y: 100 }}>
+				<div class="p-10 max-w-[1400px]" transition:fly={{ duration: 300, y: 100 }}>
 					<RecentlyPlayed {accessToken} />
 				</div>
 			{/if}
