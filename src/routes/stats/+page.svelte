@@ -61,7 +61,7 @@
 		const params = new URLSearchParams();
 		params.append('client_id', clientId);
 		params.append('response_type', 'code');
-		params.append('redirect_uri', 'http://localhost:5490/stats');
+		params.append('redirect_uri', 'https://my-spotify-stats.vercel.app/stats');
 		params.append(
 			'scope',
 			'user-read-private user-read-email user-top-read user-read-currently-playing user-read-recently-played playlist-modify-public playlist-modify-private'
