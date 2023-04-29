@@ -359,7 +359,7 @@
 		</div>
 	</main>
 {:else}
-	<div class="h-screen flex justify-center items-center">	
+	<div class="h-screen flex justify-center items-center">
 		<Loader />
 	</div>
 {/if}

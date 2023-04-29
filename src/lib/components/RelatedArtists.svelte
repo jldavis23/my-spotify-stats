@@ -19,7 +19,7 @@
 	});
 
 	const getRelatedArtists = async () => {
-		let random = Math.floor(Math.random() * allTopArtistsShort.length);
+		let random = Math.floor(Math.random() * (allTopArtistsShort.length-1));
 		let artistId = allTopArtistsShort[random].id;
 
 		try {
