@@ -4,13 +4,19 @@
 
 	//Functions
 	const convertToMinSec = (duration) => {
-		let totalMinutes = duration / 1000 / 60;
-		let seconds = Math.round((totalMinutes % Math.floor(totalMinutes)) * 60);
-		let minutes = Math.floor(totalMinutes);
-		if (seconds < 10) {
-			return `${minutes}:0${seconds}`;
+		if (duration > 60000) {
+			let totalMinutes = duration / 1000 / 60;
+			let seconds = Math.round((totalMinutes % Math.floor(totalMinutes)) * 60);
+			let minutes = Math.floor(totalMinutes);
+			if (seconds < 10) {
+				return `${minutes}:0${seconds}`;
+			} else {
+				return `${minutes}:${seconds}`;
+			}
+		} else if (duration > 999) {
+			return `0:${Math.round(duration / 1000)}`
 		} else {
-			return `${minutes}:${seconds}`;
+			return `0:0${Math.round(duration / 1000)}`
 		}
 	};
 </script>
@@ -22,14 +28,14 @@
 			<div class="flex gap-3">
 				<div class="w-16 h-16 bg-primary">
 					{#if selectedTrack.album.images[0]}
-						<img src={selectedTrack.album.images[0].url} class="w-16 h-16"/>
+						<img src={selectedTrack.album.images[0].url} class="w-16 h-16" />
 					{/if}
 				</div>
 				<div>
 					<h3 class="font-bold text-lg">{selectedTrack.name}</h3>
 					<p class="text-sm opacity-50">
 						{#each selectedTrack.artists as artist}
-							<p>{artist.name} </p>
+							<p>{artist.name}</p>
 						{/each}
 					</p>
 				</div>
@@ -65,8 +71,10 @@
 			<p>{selectedTrack.album.release_date}</p>
 		</div>
 
-		<a href={selectedTrack.external_urls.spotify} target="_blank" class="btn btn-sm btn-primary my-3"
-			>Listen on Spotify</a
+		<a
+			href={selectedTrack.external_urls.spotify}
+			target="_blank"
+			class="btn btn-sm btn-primary my-3">Listen on Spotify</a
 		>
 
 		<div class="" />

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { fly } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 	//Components
 	import TopTracks from '../../lib/components/TopTracks.svelte';
 	import TopArtists from '../../lib/components/TopArtists.svelte';
@@ -44,6 +45,8 @@
 			allTopTracksShort = await fetchAllTopTracks('short_term');
 			allTopArtistsLong = await fetchAllTopArtists('long_term');
 			allTopArtistsShort = await fetchAllTopArtists('short_term');
+
+			goto('/stats')
 		}
 	});
 
