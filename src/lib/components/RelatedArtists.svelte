@@ -39,7 +39,6 @@
 			});
 
 			allArtistRecs = artistRecs;
-			console.log(allArtistRecs);
 		} catch (err) {
 			console.log(err);
 		}
@@ -62,7 +61,7 @@
 				<div class="avatar">
 					<div class="w-12 h-12 bg-primary">
 						{#if artist.images[0]}
-							<img src={artist.images[0].url} />
+							<img src={artist.images[0].url} alt={artist.name}/>
 						{/if}
 					</div>
 				</div>

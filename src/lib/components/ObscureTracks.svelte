@@ -36,8 +36,6 @@
 			return 0;
 		});
 
-		console.log(everyTopTrack);
-
 		let artistIds = everyTopTrack.map((track) => track.artists[0].id);
 		let artists;
 
@@ -60,8 +58,6 @@
 				filteredObscureTracks.push(track);
 			}
 		});
-
-		console.log(filteredObscureTracks);
 
 		topObscureTracks = filteredObscureTracks.slice(0, 6);
 	};
@@ -88,7 +84,11 @@
 
 				<div class="text-left">
 					<div class="font-bold">{track.name}</div>
-					<div class="text-sm opacity-50">{track.artists[0].name}</div>
+					<div class="text-sm opacity-50">
+						{#each track.artists as artist}
+							<p>{artist.name} </p>
+						{/each}
+					</div>
 				</div>
 			</label>
 		{/each}

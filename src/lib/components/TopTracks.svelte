@@ -123,7 +123,11 @@ lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 
 				<div class="text-left">
 					<div class="font-bold">{track.name}</div>
-					<div class="text-sm opacity-50">{track.artists[0].name}</div>
+					<div class="text-sm opacity-50">
+						{#each track.artists as artist}
+							<p>{artist.name} </p>
+						{/each}
+					</div>
 				</div>
 			</label>
 		{/each}

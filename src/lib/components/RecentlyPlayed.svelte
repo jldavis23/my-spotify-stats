@@ -52,7 +52,11 @@
 
 				<div class="text-left">
 					<div class="font-bold">{played.track.name}</div>
-					<div class="text-sm opacity-50">{played.track.artists[0].name}</div>
+					<div class="text-sm opacity-50">
+						{#each played.track.artists as artist}
+							<p>{artist.name} </p>
+						{/each}
+					</div>
 				</div>
 			</label>
 		{/each}

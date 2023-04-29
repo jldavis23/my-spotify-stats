@@ -27,12 +27,6 @@
 	let active = 'topItems';
 	let currentlyPlaying;
 
-	// delete later
-	// profile = {
-	// 	display_name: 'George',
-	// 	images: [{ url: '' }]
-	// };
-
 	onMount(async () => {
 		if (browser) {
 			const params = new URLSearchParams(window.location.search);
@@ -197,7 +191,7 @@
 	</div>
 {:else if profile && allTopTracksLong && allTopArtistsLong && allTopTracksShort && allTopArtistsShort && currentlyPlaying}
 	<div class="bg-neutral text-neutral-content">
-		<div class="navbar">
+		<div class="navbar px-5">
 			<div class="flex-1">
 				<div class="dropdown text-primary-content">
 					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -219,23 +213,29 @@
 					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 					<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-primary rounded-box w-52">
 						<li>
-							<a class:active={active === 'topItems'} on:click={() => navigate('topItems')}
-								>Top Items</a
+							<a
+								href="#top"
+								class:active={active === 'topItems'}
+								on:click={() => navigate('topItems')}>Top Items</a
 							>
 						</li>
 						<li>
 							<a
+								href="#top"
 								class:active={active === 'audioFeatures'}
 								on:click={() => navigate('audioFeatures')}>Audio Analysis</a
 							>
 						</li>
 						<li>
-							<a class:active={active === 'obscure'} on:click={() => navigate('obscure')}
-								>Most Obscure</a
+							<a
+								href="#top"
+								class:active={active === 'obscure'}
+								on:click={() => navigate('obscure')}>Most Obscure</a
 							>
 						</li>
 						<li>
 							<a
+								href="#top"
 								class:active={active === 'recommendations'}
 								on:click={() => navigate('recommendations')}>Recommendations</a
 							>
@@ -263,11 +263,14 @@
 							{#if currentlyPlaying === 'none'}
 								Currently Playing: none
 							{:else}
-								Currently Playing: {currentlyPlaying.name} by {currentlyPlaying.artists[0].name}
+								Currently Playing: {currentlyPlaying.name}
+								{#each currentlyPlaying.artists as artist}
+									<p class="text-neutral opacity-50">{artist.name}</p>
+								{/each}
 							{/if}
 						</p>
 
-						<li><a on:click={() => navigate('recentlyPlayed')}>Recently Played</a></li>
+						<li><a href="#top" on:click={() => navigate('recentlyPlayed')}>Recently Played</a></li>
 					</ul>
 				</div>
 			</div>
@@ -279,19 +282,27 @@
 			class="menu menu-horizontal hidden sm:block sm:menu-vertical bg-primary w-full sm:w-60 p-3 sm:sticky sm:top-0 sm:h-screen"
 		>
 			<li>
-				<a class:active={active === 'topItems'} on:click={() => navigate('topItems')}>Top Items</a>
-			</li>
-			<li>
-				<a class:active={active === 'audioFeatures'} on:click={() => navigate('audioFeatures')}
-					>Audio Analysis</a
+				<a href="#top" class:active={active === 'topItems'} on:click={() => navigate('topItems')}
+					>Top Items</a
 				>
 			</li>
 			<li>
-				<a class:active={active === 'obscure'} on:click={() => navigate('obscure')}>Most Obscure</a>
+				<a
+					href="#top"
+					class:active={active === 'audioFeatures'}
+					on:click={() => navigate('audioFeatures')}>Audio Analysis</a
+				>
 			</li>
 			<li>
-				<a class:active={active === 'recommendations'} on:click={() => navigate('recommendations')}
-					>Recommendations</a
+				<a href="#top" class:active={active === 'obscure'} on:click={() => navigate('obscure')}
+					>Most Obscure</a
+				>
+			</li>
+			<li>
+				<a
+					href="#top"
+					class:active={active === 'recommendations'}
+					on:click={() => navigate('recommendations')}>Recommendations</a
 				>
 			</li>
 		</ul>

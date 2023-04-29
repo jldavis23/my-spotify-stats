@@ -108,13 +108,15 @@
 
 {#if audioFeaturesLong && audioFeaturesShort}
 	<div class="bg-[#D9EDDF]">
-		<div class="max-w-[1400px] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
+		<div
+			class="max-w-[1400px] p-10 flex justify-between gap-9 flex-col items-center sm:items-start"
+		>
 			<div class="text-center sm:text-left">
 				<h3 class="text-3xl font-bold">Danceability</h3>
 				<p>
 					The "danceability" of a track is measured through a combination of elements such as tempo,
-					rhythm stability, beat strength, and overall regularity. The higher the percentage, the more
-					"danceable" your music is!
+					rhythm stability, beat strength, and overall regularity. The higher the percentage, the
+					more "danceable" your music is!
 				</p>
 			</div>
 
@@ -128,7 +130,9 @@
 					</div>
 					<div class="text-center sm:text-left">
 						<p>ALL TIME</p>
-						<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesLong, 'danceability')}</p>
+						<p class="text-5xl text-primary-focus">
+							{getAverage(audioFeaturesLong, 'danceability')}
+						</p>
 					</div>
 				</div>
 
@@ -149,7 +153,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}
@@ -170,7 +178,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}
@@ -196,7 +208,9 @@
 					</div>
 					<div class="text-center sm:text-left">
 						<p>ALL TIME</p>
-						<p class="text-5xl text-primary-focus">{getAverage(audioFeaturesLong, 'acousticness')}</p>
+						<p class="text-5xl text-primary-focus">
+							{getAverage(audioFeaturesLong, 'acousticness')}
+						</p>
 					</div>
 				</div>
 
@@ -217,7 +231,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}
@@ -238,7 +256,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}
@@ -287,7 +309,11 @@
 
 						<div class="">
 							<div class="font-bold">{track.name}</div>
-							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+							<div class="text-sm opacity-50">
+								{#each track.artists as artist}
+									<p>{artist.name}</p>
+								{/each}
+							</div>
 						</div>
 					</a>
 				{/await}
@@ -308,7 +334,11 @@
 
 						<div class="">
 							<div class="font-bold">{track.name}</div>
-							<div class="text-sm opacity-50">{track.artists[0].name}</div>
+							<div class="text-sm opacity-50">
+								{#each track.artists as artist}
+									<p>{artist.name}</p>
+								{/each}
+							</div>
 						</div>
 					</a>
 				{/await}
@@ -359,7 +389,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}
@@ -380,7 +414,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}
@@ -390,7 +428,9 @@
 	</div>
 
 	<div class="bg-[#EEFDF2]">
-		<div class="max-w-[1400px] p-10 flex justify-between gap-9 flex-col items-center sm:items-start">
+		<div
+			class="max-w-[1400px] p-10 flex justify-between gap-9 flex-col items-center sm:items-start"
+		>
 			<div class="text-center sm:text-left">
 				<h3 class="text-3xl font-bold">Valence</h3>
 				<p>
@@ -430,7 +470,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}
@@ -451,7 +495,11 @@
 
 							<div class="">
 								<div class="font-bold">{track.name}</div>
-								<div class="text-sm opacity-50">{track.artists[0].name}</div>
+								<div class="text-sm opacity-50">
+									{#each track.artists as artist}
+										<p>{artist.name}</p>
+									{/each}
+								</div>
 							</div>
 						</a>
 					{/await}

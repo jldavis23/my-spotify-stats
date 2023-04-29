@@ -43,10 +43,6 @@
 			console.log(err);
 		}
 	}
-
-	// artists = [
-	//     {name: "BTS"}
-	// ]
 </script>
 
 <div class="lg:flex items-center gap-12">
@@ -88,7 +84,7 @@ lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
 				<div class="avatar">
 					<div class="w-12 h-12 b-primary">
 						{#if artist.images[0]}
-							<img src={artist.images[0].url} />
+							<img src={artist.images[0].url} alt={artist.name}/>
 						{/if}
 					</div>
 				</div>

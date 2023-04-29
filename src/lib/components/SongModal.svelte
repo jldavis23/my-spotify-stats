@@ -2,8 +2,6 @@
 	//Props
 	export let selectedTrack;
 
-	$: console.log(selectedTrack);
-
 	//Functions
 	const convertToMinSec = (duration) => {
 		let totalMinutes = duration / 1000 / 60;
@@ -29,7 +27,11 @@
 				</div>
 				<div>
 					<h3 class="font-bold text-lg">{selectedTrack.name}</h3>
-					<p class="text-sm opacity-50">By {selectedTrack.artists[0].name}</p>
+					<p class="text-sm opacity-50">
+						{#each selectedTrack.artists as artist}
+							<p>{artist.name} </p>
+						{/each}
+					</p>
 				</div>
 			</div>
 
