@@ -98,7 +98,7 @@
 		params.append('client_id', clientId);
 		params.append('grant_type', 'authorization_code');
 		params.append('code', code);
-		params.append('redirect_uri', 'http://localhost:5490/stats');
+		params.append('redirect_uri', 'https://my-spotify-stats.vercel.app/stats');
 		params.append('code_verifier', verifier);
 
 		try {
