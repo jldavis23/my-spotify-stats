@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { fly } from 'svelte/transition';
 	//Components
 	import TopTracks from '../../lib/components/TopTracks.svelte';
 	import TopArtists from '../../lib/components/TopArtists.svelte';
@@ -48,7 +49,6 @@
 			allTopTracksShort = await fetchAllTopTracks('short_term');
 			allTopArtistsLong = await fetchAllTopArtists('long_term');
 			allTopArtistsShort = await fetchAllTopArtists('short_term');
-			
 		}
 	});
 
@@ -178,9 +178,16 @@
 			const data = await result.json();
 			currentlyPlaying = data.item;
 		} catch (err) {
-			currentlyPlaying = 'none'
+			currentlyPlaying = 'none';
 		}
 	}
+
+	const navigate = (section) => {
+		active = null;
+		setTimeout(() => {
+			active = section;
+		}, 300);
+	};
 </script>
 
 {#if !isAuthenticated}
@@ -209,25 +216,25 @@
 					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 					<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-primary rounded-box w-52">
 						<li>
-							<a class:active={active === 'topItems'} on:click={() => (active = 'topItems')}
+							<a class:active={active === 'topItems'} on:click={() => navigate('topItems')}
 								>Top Items</a
 							>
 						</li>
 						<li>
 							<a
 								class:active={active === 'audioFeatures'}
-								on:click={() => (active = 'audioFeatures')}>Audio Analysis</a
+								on:click={() => navigate('audioFeatures')}>Audio Analysis</a
 							>
 						</li>
 						<li>
-							<a class:active={active === 'obscure'} on:click={() => (active = 'obscure')}
+							<a class:active={active === 'obscure'} on:click={() => navigate('obscure')}
 								>Most Obscure</a
 							>
 						</li>
 						<li>
 							<a
 								class:active={active === 'recommendations'}
-								on:click={() => (active = 'recommendations')}>Recommendations</a
+								on:click={() => navigate('recommendations')}>Recommendations</a
 							>
 						</li>
 					</ul>
@@ -245,7 +252,10 @@
 						</div>
 					</label>
 					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-					<ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box text-primary-content w-52">
+					<ul
+						tabindex="0"
+						class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box text-primary-content w-52"
+					>
 						<p class="p-3 text-primary-focus">
 							{#if currentlyPlaying === 'none'}
 								Currently Playing: none
@@ -254,7 +264,7 @@
 							{/if}
 						</p>
 
-						<li><a on:click={() => (active = 'recentlyPlayed')}>Recently Played</a></li>
+						<li><a on:click={() => navigate('recentlyPlayed')}>Recently Played</a></li>
 					</ul>
 				</div>
 			</div>
@@ -266,19 +276,19 @@
 			class="menu menu-horizontal hidden sm:block sm:menu-vertical bg-primary w-full sm:w-60 p-3 sm:sticky sm:top-0 sm:h-screen"
 		>
 			<li>
-				<a class:active={active === 'topItems'} on:click={() => (active = 'topItems')}>Top Items</a>
+				<a class:active={active === 'topItems'} on:click={() => navigate('topItems')}>Top Items</a>
 			</li>
 			<li>
-				<a class:active={active === 'audioFeatures'} on:click={() => (active = 'audioFeatures')}
+				<a class:active={active === 'audioFeatures'} on:click={() => navigate('audioFeatures')}
 					>Audio Analysis</a
 				>
 			</li>
 			<li>
-				<a class:active={active === 'obscure'} on:click={() => (active = 'obscure')}>Most Obscure</a
+				<a class:active={active === 'obscure'} on:click={() => navigate('obscure')}>Most Obscure</a
 				>
 			</li>
 			<li>
-				<a class:active={active === 'recommendations'} on:click={() => (active = 'recommendations')}
+				<a class:active={active === 'recommendations'} on:click={() => navigate('recommendations')}
 					>Recommendations</a
 				>
 			</li>
@@ -286,55 +296,61 @@
 
 		<div class="w-full">
 			{#if active === 'topItems'}
+			<div transition:fly={{ duration: 300, y: 100 }}>
 				<div id="" class="p-10 bg-[#D9EDDF]">
 					<p>tracks you can't get enough of right now</p>
 					<TopTracks {accessToken} userId={profile.id} />
 				</div>
-
+	
 				<div class="p-10">
 					<p>these artists dominate your playlists</p>
 					<TopArtists {accessToken} userCountry={profile.country} />
 				</div>
-
+	
 				<div class="grid md:grid-cols-2">
 					<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort} /></div>
 					<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
 				</div>
+			</div>
 			{/if}
 
 			{#if active === 'audioFeatures'}
-				<div id="" class="">
+				<div transition:fly={{ duration: 300, y: 100 }}>
 					<AudioFeatures {accessToken} {allTopTracksLong} {allTopTracksShort} />
 				</div>
 			{/if}
 
 			{#if active === 'obscure'}
-				<div class="p-10 bg-[#D9EDDF]">
-					<ObscureTracks {accessToken} {allTopTracksLong} {allTopTracksShort} />
-				</div>
+				<div transition:fly={{ duration: 300, y: 100 }}>
+					<div class="p-10 bg-[#D9EDDF]">
+						<ObscureTracks {accessToken} {allTopTracksLong} {allTopTracksShort} />
+					</div>
 
-				<div class="p-10">
-					<ObscureArtists
-						{allTopArtistsShort}
-						{allTopArtistsLong}
-						userCountry={profile.country}
-						{accessToken}
-					/>
+					<div class="p-10">
+						<ObscureArtists
+							{allTopArtistsShort}
+							{allTopArtistsLong}
+							userCountry={profile.country}
+							{accessToken}
+						/>
+					</div>
 				</div>
 			{/if}
 
 			{#if active === 'recommendations'}
-				<div class="p-10">
-					<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id} />
-				</div>
+				<div transition:fly={{ duration: 300, y: 100 }}>
+					<div class="p-10">
+						<TrackRecs {accessToken} {allTopTracksShort} userId={profile.id} />
+					</div>
 
-				<div class="p-10 bg-[#D9EDDF]">
-					<RelatedArtists {accessToken} {allTopArtistsShort} userCountry={profile.country} />
+					<div class="p-10 bg-[#D9EDDF]">
+						<RelatedArtists {accessToken} {allTopArtistsShort} userCountry={profile.country} />
+					</div>
 				</div>
 			{/if}
 
 			{#if active === 'recentlyPlayed'}
-				<div class="p-10">
+				<div class="p-10" transition:fly={{ duration: 300, y: 100 }}>
 					<RecentlyPlayed {accessToken} />
 				</div>
 			{/if}
