@@ -2,12 +2,13 @@
 	//Imports
 	import { onMount } from 'svelte';
 	import ArtistModal from './ArtistModal.svelte';
+	import Loader from './Loader.svelte';
 
 	//Props
 	export let allTopArtistsShort;
 	export let allTopArtistsLong;
 	export let userCountry;
-	export let accessToken
+	export let accessToken;
 
 	//Variables
 	let topObscureArtists = [];
@@ -35,32 +36,40 @@
 		topObscureArtists = everyTopArtist.slice(0, 6);
 	};
 
-    onMount(() => {
-        findObscureArtists();
-    })
+	onMount(() => {
+		findObscureArtists();
+	});
 </script>
 
 <h2 class="text-4xl">Your Most Obscure Artists</h2>
 
-<div class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-	{#each topObscureArtists as artist}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedArtist = artist} for="my-modal-5">
-			<div class="avatar">
-				<div class="w-12 h-12 bg-primary">
-					{#if artist.images[0]}
-						<img src={artist.images[0].url} />
-					{/if}
+{#if topObscureArtists.length > 0}
+	<div class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+		{#each topObscureArtists as artist}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<label
+				class="flex items-center space-x-3 cursor-pointer"
+				on:click={() => (selectedArtist = artist)}
+				for="my-modal-5"
+			>
+				<div class="avatar">
+					<div class="w-12 h-12 bg-primary">
+						{#if artist.images[0]}
+							<img src={artist.images[0].url} />
+						{/if}
+					</div>
 				</div>
-			</div>
 
-			<div class="text-left">
-				<div class="font-bold">{artist.name}</div>
-			</div>
-		</label>
-	{/each}
-</div>
+				<div class="text-left">
+					<div class="font-bold">{artist.name}</div>
+				</div>
+			</label>
+		{/each}
+	</div>
+{:else}
+	<Loader />
+{/if}
 
 {#if selectedArtist}
-	<ArtistModal {selectedArtist} {accessToken} {userCountry}/>
+	<ArtistModal {selectedArtist} {accessToken} {userCountry} />
 {/if}

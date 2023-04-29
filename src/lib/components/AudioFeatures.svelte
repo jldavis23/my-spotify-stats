@@ -1,6 +1,7 @@
 <script>
 	//Imports
 	import { onMount } from 'svelte';
+	import Loader from './Loader.svelte';
 
 	//Props
 	export let accessToken;
@@ -15,8 +16,6 @@
 	onMount(async () => {
 		audioFeaturesLong = await getAudioFeatures(allTopTracksLong);
 		audioFeaturesShort = await getAudioFeatures(allTopTracksShort);
-		console.log(audioFeaturesLong);
-		console.log(audioFeaturesShort);
 	});
 
 	const getAudioFeatures = async (tracks) => {
@@ -61,7 +60,6 @@
 				trackWithHighestScore = track;
 			}
 		});
-		console.log(trackWithHighestScore);
 
 		try {
 			const result = await fetch(`https://api.spotify.com/v1/tracks/${trackWithHighestScore.id}`, {
@@ -85,7 +83,6 @@
 				trackWithLowestScore = track;
 			}
 		});
-		console.log(trackWithLowestScore);
 
 		try {
 			const result = await fetch(`https://api.spotify.com/v1/tracks/${trackWithLowestScore.id}`, {
@@ -453,5 +450,9 @@
 				{/await}
 			</div>
 		</div>
+	</div>
+{:else}
+	<div class="p-10">
+		<Loader />
 	</div>
 {/if}

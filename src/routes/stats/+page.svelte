@@ -13,6 +13,7 @@
 	import ObscureTracks from '../../lib/components/ObscureTracks.svelte';
 	import ObscureArtists from '../../lib/components/ObscureArtists.svelte';
 	import RecentlyPlayed from '../../lib/components/RecentlyPlayed.svelte';
+	import Loader from '../../lib/components/Loader.svelte';
 
 	const clientId = '00867bbf4f294a7ea0b4f12c47190c0c';
 	let accessToken = null;
@@ -191,7 +192,9 @@
 </script>
 
 {#if !isAuthenticated}
-	<h1>LOADING</h1>
+	<div class="h-screen flex justify-center items-center">
+		<Loader />
+	</div>
 {:else if profile && allTopTracksLong && allTopArtistsLong && allTopTracksShort && allTopArtistsShort && currentlyPlaying}
 	<div class="bg-neutral text-neutral-content">
 		<div class="navbar">
@@ -284,8 +287,7 @@
 				>
 			</li>
 			<li>
-				<a class:active={active === 'obscure'} on:click={() => navigate('obscure')}>Most Obscure</a
-				>
+				<a class:active={active === 'obscure'} on:click={() => navigate('obscure')}>Most Obscure</a>
 			</li>
 			<li>
 				<a class:active={active === 'recommendations'} on:click={() => navigate('recommendations')}
@@ -296,22 +298,22 @@
 
 		<div class="w-full">
 			{#if active === 'topItems'}
-			<div transition:fly={{ duration: 300, y: 100 }}>
-				<div id="" class="p-10 bg-[#D9EDDF]">
-					<p>tracks you can't get enough of right now</p>
-					<TopTracks {accessToken} userId={profile.id} />
+				<div transition:fly={{ duration: 300, y: 100 }}>
+					<div id="" class="p-10 bg-[#D9EDDF]">
+						<p>tracks you can't get enough of right now</p>
+						<TopTracks {accessToken} userId={profile.id} />
+					</div>
+
+					<div class="p-10">
+						<p>these artists dominate your playlists</p>
+						<TopArtists {accessToken} userCountry={profile.country} />
+					</div>
+
+					<div class="grid md:grid-cols-2">
+						<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort} /></div>
+						<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
+					</div>
 				</div>
-	
-				<div class="p-10">
-					<p>these artists dominate your playlists</p>
-					<TopArtists {accessToken} userCountry={profile.country} />
-				</div>
-	
-				<div class="grid md:grid-cols-2">
-					<div class="p-10 bg-[#D9EDDF]"><Genres {allTopArtistsLong} {allTopArtistsShort} /></div>
-					<div class="p-10 bg-[#EEFDF2]"><Decade {allTopTracksLong} {allTopTracksShort} /></div>
-				</div>
-			</div>
 			{/if}
 
 			{#if active === 'audioFeatures'}
@@ -356,6 +358,10 @@
 			{/if}
 		</div>
 	</main>
+{:else}
+	<div class="h-screen flex justify-center items-center">	
+		<Loader />
+	</div>
 {/if}
 
 <style>

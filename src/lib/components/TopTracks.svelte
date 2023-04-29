@@ -2,6 +2,7 @@
 	//Imports
 	import { onMount } from 'svelte';
 	import SongModal from './SongModal.svelte';
+	import Loader from './Loader.svelte';
 
 	//Props
 	export let accessToken;
@@ -75,7 +76,7 @@
 	};
 </script>
 
-<div class="lg:flex items-center gap-12 ">
+<div class="lg:flex items-center gap-12">
 	<h2 class="text-4xl">Your Top Tracks</h2>
 	<div class="btn-group my-5">
 		<button
@@ -96,35 +97,42 @@
 	</div>
 </div>
 
-<div
-	class="py-3 grid gap-3
+{#if tracks.length > 0}
+	<div
+		class="py-3 grid gap-3
 md:grid-flow-col md:grid-cols-2 md:grid-rows-[repeat(10,_minmax(0,_1fr))]
 lg:grid-cols-3 lg:grid-rows-[repeat(7,_minmax(0,_1fr))]"
->
-	{#each tracks as track, index}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedTrack = track} for="my-modal-6">
-			<p class="w-1/12">{index + 1}.</p>
+	>
+		{#each tracks as track, index}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<label
+				class="flex items-center space-x-3 cursor-pointer"
+				on:click={() => (selectedTrack = track)}
+				for="my-modal-6"
+			>
+				<p class="w-1/12">{index + 1}.</p>
 
-			<div class="avatar">
-				<div class="w-12 h-12 bg-primary">
-					{#if track.album.images[0]}
-						<img src={track.album.images[0].url} alt={track.album.name} />
-					{/if}
+				<div class="avatar">
+					<div class="w-12 h-12 bg-primary">
+						{#if track.album.images[0]}
+							<img src={track.album.images[0].url} alt={track.album.name} />
+						{/if}
+					</div>
 				</div>
-			</div>
 
-			<div class="text-left">
-				<div class="font-bold">{track.name}</div>
-				<div class="text-sm opacity-50">{track.artists[0].name}</div>
-			</div>
-		</label>
-	{/each}
-</div>
-
-{#if selectedTrack}
-	<SongModal {selectedTrack}/>
+				<div class="text-left">
+					<div class="font-bold">{track.name}</div>
+					<div class="text-sm opacity-50">{track.artists[0].name}</div>
+				</div>
+			</label>
+		{/each}
+	</div>
+{:else}
+	<Loader />
 {/if}
 
+{#if selectedTrack}
+	<SongModal {selectedTrack} />
+{/if}
 
 <button class="btn" on:click={() => createPlaylist(btnTimeFrame)}>+ Create Playlist</button>

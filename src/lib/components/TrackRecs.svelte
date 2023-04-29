@@ -2,11 +2,12 @@
 	//Imports
 	import { onMount } from 'svelte';
 	import SongModal from './SongModal.svelte';
+	import Loader from './Loader.svelte';
 
 	//Props
 	export let accessToken;
 	export let allTopTracksShort;
-    export let userId;
+	export let userId;
 
 	//Variables
 	let allTrackRecs = [];
@@ -41,13 +42,13 @@
 				}
 			});
 
-			allTrackRecs = trackRecs
+			allTrackRecs = trackRecs;
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-    async function createPlaylist() {
+	async function createPlaylist() {
 		try {
 			const result = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
 				method: 'POST',
@@ -64,7 +65,7 @@
 	}
 
 	const addSongsToPlaylist = async (playlistId) => {
-        let trackUris = allTrackRecs.map(track => track.uri)
+		let trackUris = allTrackRecs.map((track) => track.uri);
 
 		try {
 			const result = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
@@ -81,32 +82,38 @@
 
 <h2 class="text-4xl">Track Recommendations</h2>
 
-<button class="btn my-6 btn-sm" on:click={findTrackRecs}>Refresh</button>
+{#if allTrackRecs.length > 0}
+	<button class="btn my-6 btn-sm" on:click={findTrackRecs}>Refresh</button>
 
-<div
-	class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-	{#each allTrackRecs as track}
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<label class="flex items-center space-x-3 cursor-pointer" on:click={() => selectedTrack = track} for="my-modal-6">
-
-			<div class="avatar">
-				<div class="w-12 h-12 bg-primary">
-					{#if track.album.images[0]}
-						<img src={track.album.images[0].url} alt={track.album.name} />
-					{/if}
+	<div class="py-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+		{#each allTrackRecs as track}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<label
+				class="flex items-center space-x-3 cursor-pointer"
+				on:click={() => (selectedTrack = track)}
+				for="my-modal-6"
+			>
+				<div class="avatar">
+					<div class="w-12 h-12 bg-primary">
+						{#if track.album.images[0]}
+							<img src={track.album.images[0].url} alt={track.album.name} />
+						{/if}
+					</div>
 				</div>
-			</div>
 
-			<div class="text-left">
-				<div class="font-bold">{track.name}</div>
-				<div class="text-sm opacity-50">{track.artists[0].name}</div>
-			</div>
-		</label>
-	{/each}
-</div>
+				<div class="text-left">
+					<div class="font-bold">{track.name}</div>
+					<div class="text-sm opacity-50">{track.artists[0].name}</div>
+				</div>
+			</label>
+		{/each}
+	</div>
+{:else}
+	<Loader />
+{/if}
 
 {#if selectedTrack}
-	<SongModal {selectedTrack}/>
+	<SongModal {selectedTrack} />
 {/if}
 
 <button class="btn my-6" on:click={() => createPlaylist()}>+ Create Playlist</button>
