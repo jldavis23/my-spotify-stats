@@ -14,6 +14,7 @@
 	</div>
 	
 </footer>
-<div class="text-center p-4 bg-base-300 text-base-content">
-	<p>Created by Jacey Davis for DGM 3780</p>
+<div class="text-center p-4">
+	<p>Built by Jacey Davis for DGM 3780</p>
+	<div class="flex items-center justify-center gap-1 mt-4">Content provided by<img src="/Spotify_Logo_RGB_Green.png" alt="Spotify Logo" class="w-28"></div>
 </div>
